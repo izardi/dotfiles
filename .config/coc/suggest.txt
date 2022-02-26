@@ -1,0 +1,3 @@
+by|byteorder|clangd
+un|union_bytes|clangd
+uni|union_bytes|clangd
