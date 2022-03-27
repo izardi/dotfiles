@@ -1,0 +1,141 @@
+
+# 2022-03-27 15:08:11.862782
++\dt
+
+# 2022-03-27 15:08:13.440237
++\d
+
+# 2022-03-27 15:08:15.024055
++help
+
+# 2022-03-27 15:08:16.321725
++\h
+
+# 2022-03-27 15:12:53.137761
++exit
+
+# 2022-03-27 19:59:52.129440
++d
+
+# 2022-03-27 19:59:53.320763
++\d
+
+# 2022-03-27 20:00:00.181535
++create database eg
+
+# 2022-03-27 20:00:02.364251
++\dt
+
+# 2022-03-27 20:00:03.561961
++\d
+
+# 2022-03-27 20:00:12.299244
++\db
+
+# 2022-03-27 20:00:26.208802
++\d information_schema.data_type_privileges
+
+# 2022-03-27 20:00:39.025738
++show database
+
+# 2022-03-27 20:00:43.553133
++\l
+
+# 2022-03-27 20:01:05.243759
++\c eg
+
+# 2022-03-27 20:02:12.024318
++create table person( id int, name VARCHAR(200))
+
+# 2022-03-27 20:02:14.268953
++\d
+
+# 2022-03-27 20:02:21.368944
++\d person;
+
+# 2022-03-27 20:04:02.589545
++drop table person
+
+# 2022-03-27 20:05:31.699946
++create table person( id bigserial not null primary key, name varchar(200) not null, gender varchar(7) not null, birthday date not null, email varchar(250))
+
+# 2022-03-27 20:05:34.855466
++\d person
+
+# 2022-03-27 20:06:24.133973
++\d
+
+# 2022-03-27 20:06:45.759583
++\d person_id_seq
+
+# 2022-03-27 20:07:12.330707
++\d person
+
+# 2022-03-27 20:08:26.398085
++select name from person
+
+# 2022-03-27 20:09:17.739502
++insert into person(name, gender, birthday) values("yuanzi", "male", "1970-12-22")
+
+# 2022-03-27 20:10:10.774100
++insert into person(`name`, gender, birthday) values("yuanzi", "male",date "1970-12-22")
+
+# 2022-03-27 20:10:24.611205
++insert into person(name, gender, birthday) values("yuanzi", "male",date "1970-12-22")
+
+# 2022-03-27 20:10:31.534591
++insert into person(name, gender, birthday) values("yuanzi", "male",date"1970-12-22")
+
+# 2022-03-27 20:10:59.711067
++insert into person(name, gender, birthday) values("yuanzi", "male",date "1970-12-22")
+
+# 2022-03-27 20:11:08.786991
++insert into person(name, gender, birthday) values("yuanzi", "male","1970-12-22")
+
+# 2022-03-27 20:11:18.294527
++ls
+
+# 2022-03-27 20:11:21.324068
++\d person
+
+# 2022-03-27 20:12:12.967832
++insert into person(name, gender, birthday) values("yuanzi", "male","1970-12-22")
+
+# 2022-03-27 20:12:36.278542
++insert into person(name, gender, birthday) values('yuanzi', "male","1970-12-22")
+
+# 2022-03-27 20:13:02.994581
++insert into person(name, gender, birthday) values('yuanzi', 'male', '1970-9-12')
+
+# 2022-03-27 20:13:07.773634
++select * from person
+
+# 2022-03-27 20:14:47.391942
++insert into person(name, gender, birthday, email) values('yuanzi', 'male', '1970-9-12', 'qwe@qq.com')
+
+# 2022-03-27 20:15:14.078051
++insert into person(name, gender, birthday, email) values('huahua', 'female', '2000-9-12', 'huahua@qq.com')
+
+# 2022-03-27 20:27:25.484217
++select distinct name from person order by name
+
+# 2022-03-27 21:08:13.327773
++select 'a' > 'b'
+
+# 2022-03-27 21:08:27.131339
++select 'a' <> 'b'
+
+# 2022-03-27 21:08:36.233339
++select * from person
+
+# 2022-03-27 21:09:48.317646
++select * from person offset 1 limit 1;
+
+# 2022-03-27 21:09:53.635615
++select * from person offset 1 limit 2;
+
+# 2022-03-27 21:10:07.986692
++select * from person offset 2 limit 2;
+
+# 2022-03-27 22:17:44.000058
++exit
