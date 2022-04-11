@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "coc-clangd": ">=0.21.1",
+    "coc-clangd": ">=0.21.3",
     "coc-json": ">=1.4.1",
     "coc-marketplace": ">=1.9.0",
     "coc-sh": ">=0.6.1",
