@@ -1,0 +1,47 @@
+{
+    "editor.fontFamily": "'Jetbrains Mono', 'Fira code'",
+    "editor.fontWeight": "700",
+    "editor.fontSize": 17,
+    "editor.lineHeight": 1.6,
+    "workbench.sideBar.location": "right",
+    "debug.terminal.clearBeforeReusing": true,
+    "terminal.integrated.defaultProfile.windows": "Command Prompt",
+    "terminal.integrated.fontWeight": "bold",
+    "explorer.confirmDelete": false,
+    "terminal.integrated.fontFamily": "fira code",
+    "files.autoGuessEncoding": true,
+    "editor.minimap.enabled": false,
+    "explorer.confirmDragAndDrop": false,
+    "git.autofetch": true,
+    "code-runner.clearPreviousOutput": true,
+    "code-runner.saveAllFilesBeforeRun": true,
+    "code-runner.runInTerminal": true,
+    "code-runner.executorMap": {
+        "java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
+        "c": "cd $dir && clang $fileName -o $fileNameWithoutExt -lpthread -Wall -std=c17 && $dir$fileNameWithoutExt",
+        "cpp": "cd $dir && clang++ $fileName -o $fileNameWithoutExt -lpthread -Wall -std=c++20 && $dir$fileNameWithoutExt",
+        "python": "python -u",
+        "rust": "cd $dir && rustc $fileName && $dir$fileNameWithoutExt"
+    },
+    "clangd.arguments": [
+        "--completion-style=detailed",
+        "--all-scopes-completion",
+        "--clang-tidy",
+        "--background-index",
+        "--query-driver=clang++",
+        "--pretty",
+        "-j=8",
+        "--fallback-style=Google",
+        "--enable-config"
+    ],
+    "editor.codeActionsOnSave": {
+
+
+    },
+    "search.followSymlinks": false,
+    "editor.fontLigatures": false,
+    "cmake.configureOnOpen": false,
+    "git.confirmSync": false,
+    "vscode-neovim.neovimClean": true,
+    "workbench.colorTheme": "Default High Contrast"
+}

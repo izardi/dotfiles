@@ -1,0 +1,25 @@
+/config/*
+!/config/nvim
+!/config/alacritty.yml
+!/config/clangd
+!/config/code-flags.conf
+
+!/config/Code - OSS
+/config/Code - OSS/*
+!/config/Code - OSS/User
+/config/Code - OSS/User/*
+!/config/Code - OSS/User/settings.json
+
+!/config/dconf
+!/config/electron-flags.conf
+!/config/fcitx*
+!/config/fish
+!/config/gtk-3.0
+!/config/hypr
+!/config/lapce-stable
+!/config/lazygit
+!/config/gitui
+!/config/mpv
+!/config/ranger
+!/config/sway
+!/config/waybar

@@ -1,0 +1,19 @@
+
+[editor]
+font-family = "jetbrains mono"
+font-size = 15
+line-height = 1.7
+
+[core]
+modal = true
+custom-titlebar = false
+
+[ui]
+font-family = "Jetbrains Mono"
+
+[terminal]
+font-family = "fira code"
+font-size = 14
+
+[lapce-cpp-clangd]
+"volt.serverPath" = "/usr/bin/clangd"
