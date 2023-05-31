@@ -1,5 +1,6 @@
 /config/*
 !/config/nvim
+!/config/nvim.bak
 !/config/alacritty.yml
 !/config/clangd
 !/config/code-flags.conf
