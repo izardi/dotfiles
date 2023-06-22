@@ -502,9 +502,6 @@ require("lazy").setup({
             local sources = {
                 nl.builtins.diagnostics.clang_check,
                 nl.builtins.formatting.clang_format,
-
-                nl.builtins.diagnostics.cmake_lint,
-                nl.builtins.formatting.cmake_format,
             }
             nl.setup({
                 sources = sources,
@@ -793,7 +790,7 @@ require("lazy").setup({
                 extensions = {
                     -- defaults:
                     -- automatically set inlay hints (type hints)
-                    autosethints = false,
+                    autosethints = true,
                     -- whether to show hover actions inside the hover window
                     -- this overrides the default hover handler
                     hover_with_actions = true,
@@ -808,7 +805,7 @@ require("lazy").setup({
                         -- autosethints both are true.
                         only_current_line_autocmd = "cursorhold",
                         -- whether to show parameter hints with the inlay hints or not
-                        show_parameter_hints = true,
+                        show_parameter_hints = false,
                         -- prefix for parameter hints
                         parameter_hints_prefix = "<- ",
                         -- prefix for all the other hints (type, chaining)
@@ -1070,7 +1067,7 @@ require("lazy").setup({
         end
     },
 
-    { -- codeunner
+    { -- coderunner
 
         "CRAG666/code_runner.nvim",
         config = function()
@@ -1107,6 +1104,6 @@ require("lazy").setup({
                 }
             })
         end
-    }
+    },
 
 }, {})
