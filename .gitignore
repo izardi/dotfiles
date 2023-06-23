@@ -4,14 +4,6 @@
 !/config/nvim.bak
 !/config/alacritty.yml
 !/config/clangd
-!/config/code-flags.conf
-
-!/config/Code - OSS
-/config/Code - OSS/*
-!/config/Code - OSS/User
-/config/Code - OSS/User/*
-!/config/Code - OSS/User/settings.json
-
 !/config/dconf
 !/config/electron-flags.conf
 !/config/fcitx*
