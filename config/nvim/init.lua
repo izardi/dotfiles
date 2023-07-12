@@ -1,3 +1,41 @@
+-- OPTIONS ----------------------------------
+
+local op = vim.opt
+
+op.showmode = false
+
+op.backup = false
+op.hlsearch = true
+op.ignorecase = true
+op.smartcase = true
+op.signcolumn = "yes"
+
+op.showtabline = 2
+op.smartindent = true
+op.autoindent = true
+op.expandtab = true
+op.shiftwidth = 4
+op.tabstop = 4
+
+op.fileencoding = "utf-8"
+op.autoread = true
+
+op.number = true
+op.relativenumber = true
+op.numberwidth = 4
+op.clipboard:append("unnamedplus")
+
+op.splitbelow = true
+op.splitright = true
+
+op.termguicolors = true
+op.background = "dark"
+op.cursorline = true
+
+op.mouse:append("a")
+
+
+
 -- KEYMAPS ----------------------------------
 
 
@@ -38,46 +76,11 @@ km.set("n", "<Leader>nh", ":nohl<CR>")
 
 
 
--- OPTIONS ----------------------------------
-
-
-vim.opt.backup = false
-vim.opt.hlsearch = true
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
-vim.opt.signcolumn = "yes"
-
-vim.opt.showtabline = 2
-vim.opt.smartindent = true
-vim.opt.autoindent = true
-vim.opt.expandtab = true
-vim.opt.shiftwidth = 4
-vim.opt.tabstop = 4
-
-vim.opt.fileencoding = "utf-8"
-vim.opt.autoread = true
-
-vim.opt.number = true
-vim.opt.relativenumber = true
-vim.opt.numberwidth = 4
-vim.opt.clipboard:append("unnamedplus")
-
-vim.opt.splitbelow = true
-vim.opt.splitright = true
-
-vim.opt.termguicolors = true
-vim.opt.background = "dark"
-vim.opt.cursorline = true
-
-vim.opt.mouse:append("a")
-
--- 根据文件类型来加载插件
-vim.api.nvim_command(':filetype plugin on')
-
-
 -- PLUGINS ----------------------------------
 
 
+-- 根据文件类型来加载插件
+vim.api.nvim_command(':filetype plugin on')
 
 -- lazy plugin manager
 
@@ -99,6 +102,7 @@ require("lazy").setup({
     { -- start screen
 
         'goolord/alpha-nvim',
+        event = "VimEnter",
         config = function()
             require'alpha'.setup(require'alpha.themes.dashboard'.config)
         end
@@ -134,7 +138,6 @@ require("lazy").setup({
     { -- Telescope
 
         'nvim-telescope/telescope.nvim',
-        event = "VeryLazy",
         cmd = 'Telescope',
         dependencies = 'nvim-lua/plenary.nvim',
         keys = {
@@ -158,23 +161,18 @@ require("lazy").setup({
     { -- toggleterm
 
         'akinsho/toggleterm.nvim',
-        event = "VeryLazy",
         config = function()
-            -- keybindings
-            vim.keymap.set('n', '<leader>tt', '<Cmd>exe v:count1 . "ToggleTerm"<CR>', {noremap = true, silent = true}, opts)
-            vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
-            vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
-            vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
-            vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
-            vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
-
             require("toggleterm").setup({})
-        end
+        end,
+        keys = {
+            {'<leader>tt', '<Cmd>exe v:count1 . "ToggleTerm"<CR>'},
+        }
     },
 
     { -- indent-blankline
 
         "lukas-reineke/indent-blankline.nvim",
+        lazy = false,
         config = function()
             vim.g.indent_blankline_buftype_exclude = { "terminal", "nofile" }
             vim.g.indent_blankline_filetype_exclude = {
@@ -247,76 +245,25 @@ require("lazy").setup({
     
     { -- todo-comments
 
-        "folke/todo-comments.nvim",
-        dependencies = "nvim-lua/plenary.nvim",
-        opts = {
-            signs = true, -- show icons in the signs column
-            sign_priority = 8, -- sign priority
-            -- keywords recognized as todo comments
-            keywords = {
-                FIX = {
-                    icon = " ", -- icon used for the sign, and in search results
-                    color = "error", -- can be a hex color, or a named color (see below)
-                    alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
-                    -- signs = false, -- configure signs for some keywords individually
-                },
-                TODO = { icon = " ", color = "info" },
-                HACK = { icon = " ", color = "warning" },
-                WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
-                PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-                NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
-                TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
-            },
-            gui_style = {
-                fg = "NONE", -- The gui style to use for the fg highlight group.
-                bg = "BOLD", -- The gui style to use for the bg highlight group.
-            },
-            merge_keywords = true, -- when true, custom keywords will be merged with the defaults
-            -- highlighting of the line containing the todo comment
-            -- * before: highlights before the keyword (typically comment characters)
-            -- * keyword: highlights of the keyword
-            -- * after: highlights after the keyword (todo text)
-            highlight = {
-                multiline = true, -- enable multine todo comments
-                multiline_pattern = "^.", -- lua pattern to match the next multiline from the start of the matched keyword
-                multiline_context = 10, -- extra lines that will be re-evaluated when changing a line
-                before = "", -- "fg" or "bg" or empty
-                keyword = "wide", -- "fg", "bg", "wide", "wide_bg", "wide_fg" or empty. (wide and wide_bg is the same as bg, but will also highlight surrounding characters, wide_fg acts accordingly but with fg)
-                after = "fg", -- "fg" or "bg" or empty
-                pattern = [[.*<(KEYWORDS)\s*:]], -- pattern or table of patterns, used for highlighting (vim regex)
-                comments_only = true, -- uses treesitter to match keywords in comments only
-                max_line_len = 400, -- ignore lines longer than this
-                exclude = {}, -- list of file types to exclude highlighting
-            },
-
-            colors = {
-                error = { "DiagnosticError", "ErrorMsg", "#DC2626" },
-                warning = { "DiagnosticWarn", "WarningMsg", "#FBBF24" },
-                info = { "DiagnosticInfo", "#2563EB" },
-                hint = { "DiagnosticHint", "#10B981" },
-                default = { "Identifier", "#7C3AED" },
-                test = { "Identifier", "#FF00FF" }
-            },
-            search = {
-                command = "rg",
-                args = {
-                    "--color=never",
-                    "--no-heading",
-                    "--with-filename",
-                    "--line-number",
-                    "--column",
-                },
-                -- regex that will be used to match keywords.
-                -- don't replace the (KEYWORDS) placeholder
-                pattern = [[\b(KEYWORDS):]], -- ripgrep regex
-                -- pattern = [[\b(KEYWORDS)\b]], -- match without the extra colon. You'll likely get false positives
-            },
-        }
+      "folke/todo-comments.nvim",
+      cmd = { "TodoTrouble", "TodoTelescope" },
+      event = { "BufReadPost", "BufNewFile" },
+      config = true,
+      -- stylua: ignore
+      keys = {
+        { "]t", function() require("todo-comments").jump_next() end, desc = "Next todo comment" },
+        { "[t", function() require("todo-comments").jump_prev() end, desc = "Previous todo comment" },
+        { "<leader>xt", "<cmd>TodoTrouble<cr>", desc = "Todo (Trouble)" },
+        { "<leader>xT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme (Trouble)" },
+        { "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Todo" },
+        { "<leader>sT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme" },
+      },
     },
 
     { -- lualine
 
         'nvim-lualine/lualine.nvim',
+        lazy = false,
         dependencies = 'nvim-tree/nvim-web-devicons',
         config = function()
 
@@ -495,6 +442,7 @@ require("lazy").setup({
     { -- null-ls
 
         "jose-elias-alvarez/null-ls.nvim",
+        event = "InsertEnter",
         dependencies = 'nvim-lua/plenary.nvim',
 
         config = function()
@@ -514,7 +462,7 @@ require("lazy").setup({
     { -- gitsigns
 
         'lewis6991/gitsigns.nvim',
-        event = "VeryLazy",
+        event = { "BufReadPre", "BufNewFile" },
         config = function()
             require('gitsigns').setup {
                 signs = {
@@ -563,9 +511,8 @@ require("lazy").setup({
 
     { -- nvim tree
 
-        event = "VeryLazy",
         "nvim-tree/nvim-tree.lua",
-        version = "*",
+        cmd = "Neotree",
         dependencies = "nvim-tree/nvim-web-devicons",
         config = function()
             require("nvim-tree").setup{}
@@ -579,7 +526,7 @@ require("lazy").setup({
 
         'akinsho/bufferline.nvim',
         version = "*",
-        lazy = false,
+        event = "VeryLazy",
         dependencies = 'nvim-tree/nvim-web-devicons',
         config = function()
             require("bufferline").setup({
@@ -703,8 +650,8 @@ require("lazy").setup({
     { -- nvim-lspconfig
 
         "neovim/nvim-lspconfig",
-        event = "VeryLazy",
         dependencies = "p00f/clangd_extensions.nvim",
+        event = { "BufReadPre", "BufNewFile" },
 
         config = function()
             local lspconfig = require("lspconfig")
@@ -756,39 +703,32 @@ require("lazy").setup({
                 vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><leader>f', '<cmd>lua vim.lsp.buf.formatting_sync()<cr>', opts)
             end
 
-            -- nvim-cmp supports additional completion capabilities
             local capabilities = vim.lsp.protocol.make_client_capabilities()
             capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
-            servers = { 'clangd' }
-            for _, lsp in ipairs(servers) do
-                lspconfig[lsp].setup {
-                    on_attach = on_attach,
-                        flags = {
-                            -- this will be the default in neovim 0.7+
-                            debounce_text_changes = 100,
-                        },
-                    capabilities = capabilities
-                }
-            end
-
             ---- clangd extensions config
-            local clangdext = require("clangd_extensions")
-
-            -- use clangd extensions to init clangd lsp
-            clangdext.setup {
+            require("clangd_extensions").setup{
                 server = {
-                    -- options to pass to nvim-lspconfig
-                    -- i.e. the arguments to require("lspconfig").clangd.setup({})
                     on_attach = on_attach,
-                    flags = {
-                        -- this will be the default in neovim 0.7+
-                        debounce_text_changes = 100,
+                    capabilities = capabilities,
+
+                    initialization_options = {
+                        fallback_flags = { "-std=c++2b" },
                     },
-                    capabilities = capabilities
+                    cmd = {
+                        "clangd",
+                        "-j=4",
+                        "--background-index",
+                        "--clang-tidy",
+                        "--fallback-style=llvm",
+                        "--all-scopes-completion",
+                        "--completion-style=detailed",
+                        "--header-insertion=iwyu",
+                        "--header-insertion-decorators",
+                        "--pch-storage=memory",
+                    },
                 },
                 extensions = {
-                    -- defaults:
                     -- automatically set inlay hints (type hints)
                     autosethints = true,
                     -- whether to show hover actions inside the hover window
@@ -861,6 +801,8 @@ require("lazy").setup({
     { -- nvim-treesitter
 
         'nvim-treesitter/nvim-treesitter',
+        event = { "BufReadPost", "BufNewFile" },
+        cmd = { "TSUpdateSync" },
         config = function()
             require'nvim-treesitter.configs'.setup {
                 ensure_installed = { "c", "lua", "cpp", "cmake", "markdown", "javascript", "rust" },
@@ -898,7 +840,7 @@ require("lazy").setup({
     { -- nvim-cmp
         
         'hrsh7th/nvim-cmp',
-        event = "insertenter",
+        event = "InsertEnter",
         dependencies = {
             -- snippets
             "L3MON4D3/Luasnip",
@@ -1106,4 +1048,16 @@ require("lazy").setup({
         end
     },
 
-}, {})
+}, 
+{
+  defaults = {
+    lazy = true, -- should plugins be lazy-loaded?
+  },
+  checker = {
+    -- automatically check for plugin updates
+    enabled = true,
+    concurrency = 1, ---@type number? set to 1 to check for updates very slowly
+    notify = true, -- get a notification when new updates are found
+    frequency = 36000, -- check for updates every hour
+  },
+})

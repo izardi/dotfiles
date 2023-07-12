@@ -61,6 +61,8 @@ exec swayidle -w \
     # Kill focused wimndow
     bindsym $mod+Shift+q kill
 
+    bindsym $mod+shift+s exec grim
+
     # Start your launcher
     bindsym $mod+d exec $menu
 
