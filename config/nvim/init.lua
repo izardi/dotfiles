@@ -78,9 +78,9 @@ km.set("n", "<Leader>nh", ":nohl<CR>")
 
 -- PLUGINS ----------------------------------
 
-
 -- 根据文件类型来加载插件
 vim.api.nvim_command(':filetype plugin on')
+
 
 -- lazy plugin manager
 
@@ -389,52 +389,18 @@ require("lazy").setup({
 
         "folke/trouble.nvim",
         dependencies = "nvim-tree/nvim-web-devicons",
+
         config = function()
-            require("trouble").setup({
-                position = "bottom", -- position of the list can be: bottom, top, left, right
-                height = 10, -- height of the trouble list when position is top or bottom
-                width = 50, -- width of the list when position is left or right
-                icons = true, -- use devicons for filenames
-                mode = "document_diagnostics", -- "workspace_diagnostics", "document_diagnostics", "quickfix", "lsp_references", "loclist"
-                fold_open = "", -- icon used for open folds
-                action_keys = {
-                fold_closed = "", -- icon used for closed folds
-                    -- key mappings for actions in the trouble list
-                    -- map to {} to remove a mapping, for example:
-                    -- close = {},
-                    close = "q", -- close the list
-                    cancel = "<esc>", -- cancel the preview and get back to your last window / buffer / cursor
-                    refresh = "r", -- manually refresh
-                    jump = { "o", "<tab>" }, -- jump to the diagnostic or open / close folds
-                    open_split = { "<c-x>" }, -- open buffer in new split
-                    open_vsplit = { "<c-v>" }, -- open buffer in new vsplit
-                    open_tab = { "<c-t>" }, -- open buffer in new tab
-                    jump_close = { "<cr>" }, -- jump to the diagnostic and close the list
-                    toggle_mode = "m", -- toggle between "workspace" and "document" diagnostics mode
-                    toggle_preview = "p", -- toggle auto_preview
-                    hover = "K", -- opens a small popup with the full multiline message
-                    preview = "P", -- preview the diagnostic location
-                    close_folds = { "zM", "zm" }, -- close all folds
-                    open_folds = { "zR", "zr" }, -- open all folds
-                    toggle_fold = { "zA", "zo", "zc" }, -- toggle fold of current file
-                    previous = "k", -- preview item
-                    next = "j", -- next item
-                },
-                indent_lines = true, -- add an indent guide below the fold icons
-                auto_open = false, -- automatically open the list when you have diagnostics
-                auto_close = true, -- automatically close the list when you have no diagnostics
-                auto_preview = true, -- automatically preview the location of the diagnostic. <esc> to close preview and go back to last window
-                auto_fold = false, -- automatically fold a file trouble list at creation
-                signs = {
-                    -- icons / text used for a diagnostic
-                    error = "",
-                    warning = "",
-                    hint = "",
-                    information = "",
-                    other = "﫠",
-                },
-                use_lsp_diagnostic_signs = false, -- enabling this will use the signs defined in your lsp client
-            })
+
+            local opts = {silent = true, noremap = true}
+            vim.keymap.set("n", "<leader>xx", "<cmd>TroubleToggle<cr>", opts)
+            vim.keymap.set("n", "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>", opts)
+            vim.keymap.set("n", "<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>", opts);
+            vim.keymap.set("n", "<leader>xl", "<cmd>TroubleToggle loclist<cr>", opts)
+            vim.keymap.set("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>", opts);
+            vim.keymap.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>", opts);
+
+            require("trouble").setup({})
         end
     },
 
@@ -525,92 +491,29 @@ require("lazy").setup({
     { -- bufferline
 
         'akinsho/bufferline.nvim',
-        version = "*",
         event = "VeryLazy",
-        dependencies = 'nvim-tree/nvim-web-devicons',
         config = function()
             require("bufferline").setup({
                 options = {
-                    mode = "buffers", -- set to "tabs" to only show tabpages instead
-                    numbers = "ordinal", -- | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string,
-                    --- @deprecated, please specify numbers as a function to customize the styling
-                    -- number_style = "superscript", --| "subscript" | "" | { "none", "subscript" }, -- buffer_id at index 1, ordinal at index 2
-                    close_command = "bdelete! %d",       -- can be a string | function, see "Mouse actions"
-                    right_mouse_command = "bdelete! %d", -- can be a string | function, see "Mouse actions"
-                    left_mouse_command = "buffer %d",    -- can be a string | function, see "Mouse actions"
-                    middle_mouse_command = nil,          -- can be a string | function, see "Mouse actions"
-                    -- NOTE: this plugin is designed with this icon in mind,
-                    -- and so changing this is NOT recommended, this is intended
-                    -- as an escape hatch for people who cannot bear it for whatever reason
-                    indicator_icon = '▎',
-                    buffer_close_icon = '',
                     modified_icon = '●',
-                    close_icon = '',
-                    left_trunc_marker = '',
-                    right_trunc_marker = '',
-                    --- name_formatter can be used to change the buffer's label in the bufferline.
-                    --- Please note some names can/will break the
-                    --- bufferline so use this at your discretion knowing that it has
-                    --- some limitations that will *NOT* be fixed.
-                    name_formatter = function(buf)  -- buf contains a "name", "path" and "bufnr"
-                        -- remove extension from markdown files for example
-                        if buf.name:match('%.md') then
-                            return vim.fn.fnamemodify(buf.name, ':t:r')
-                        end
+                    diagnostics = "nvim_lsp",
+                    diagnostics_indicator = function(count, level)
+                        local icon = level:match("error") and " " or ""
+                        return " " .. icon .. count
                     end,
-                    max_name_length = 18,
-                    max_prefix_length = 15, -- prefix used when a buffer is de-duplicated
-                    tab_size = 18,
-                    diagnostics = false, --| "nvim_lsp" | "coc",
-                    diagnostics_update_in_insert = false,
-                    diagnostics_indicator = function(count, level, diagnostics_dict, context)
-                        return "("..count..")"
-                    end,
-                    -- NOTE: this will be called a lot so don't do any heavy processing here
-                    custom_filter = function(buf_number, buf_numbers)
-                        -- filter out filetypes you don't want to see
-                        if vim.bo[buf_number].filetype ~= "<i-dont-want-to-see-this>" then
-                            return true
-                        end
-                        -- filter out by buffer name
-                        if vim.fn.bufname(buf_number) ~= "<buffer-name-I-dont-want>" then
-                            return true
-                        end
-                        -- filter out based on arbitrary rules
-                        -- e.g. filter out vim wiki buffer from tabline in your work repo
-                        if vim.fn.getcwd() == "<work-repo>" and vim.bo[buf_number].filetype ~= "wiki" then
-                            return true
-                        end
-                        -- filter out by it's index number in list (don't show first buffer)
-                        if buf_numbers[1] ~= buf_number then
-                            return true
-                        end
-                    end,
-                    offsets = {{filetype = "NvimTree", text = "File Explorer", text_align="center"}}, -- | function , text_align = "left" | "center" | "right",
-                    show_buffer_icons = true, --| false, -- disable filetype icons for buffers
-                    show_buffer_close_icons = true, --| false,
-                    show_close_icon = true, --| false,
-                    show_tab_indicators = true, -- | false,
-                    persist_buffer_sort = true, -- whether or not custom sorted buffers should persist
-                    -- can also be a table containing 2 custom separators
-                    -- [focused and unfocused]. eg: { '|', '|' }
-                    separator_style = "thin", --| "slant" | "thick" | "thin" | { 'any', 'any' },
-                    enforce_regular_tabs = false, --| true,
-                    always_show_bufferline = true, -- | false,
-                    sort_by =  'directory',  -- ,'id' | 'extension' | 'relative_directory' | 'directory' | 'tabs' | function(buffer_a, buffer_b)
                 }
             })
 	    end,
-
 	    keys = {
-            { "<leader>rr", ":BufferLineCycleNext<CR>", desc = "next buffer" },
-            { "<leader>ll", ":BufferLineCyclePrev<CR>", desc = "prev buffer" },
+            { "<leader>br", ":BufferLineCycleNext<CR>", desc = "next buffer" },
+            { "<leader>bl", ":BufferLineCyclePrev<CR>", desc = "prev buffer" },
 	    }
     },
 
     { -- nvim-autopairs
 
         'windwp/nvim-autopairs',
+        event = "InsertEnter",
         config = function()
             local rule = require('nvim-autopairs.rule')
             local status_ok, npairs = pcall(require, 'nvim-autopairs')
@@ -650,7 +553,6 @@ require("lazy").setup({
     { -- nvim-lspconfig
 
         "neovim/nvim-lspconfig",
-        dependencies = "p00f/clangd_extensions.nvim",
         event = { "BufReadPre", "BufNewFile" },
 
         config = function()
@@ -672,130 +574,57 @@ require("lazy").setup({
                 vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
             end
 
-            -- mappings.
-            -- see `:help vim.diagnostic.*` for documentation on any of the below functions
-            local opts = { noremap=true, silent=true }
-            vim.api.nvim_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<cr>', opts)
-            vim.api.nvim_set_keymap('n', '[g', '<cmd>lua vim.diagnostic.goto_prev()<cr>', opts)
-            vim.api.nvim_set_keymap('n', ']g', '<cmd>lua vim.diagnostic.goto_next()<cr>', opts)
-            vim.api.nvim_set_keymap('n', '<leader>q', '<cmd>lua vim.diagnostic.setloclist()<cr>', opts)
+            vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
+            vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+            vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+            vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
-            -- use an on_attach function to only map the following keys
+            -- Use LspAttach autocommand to only map the following keys
             -- after the language server attaches to the current buffer
-            local on_attach = function(client, bufnr)
-                -- enable completion triggered by <c-x><c-o>
-                vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+            vim.api.nvim_create_autocmd('LspAttach', {
+              group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+              callback = function(ev)
+                -- Enable completion triggered by <c-x><c-o>
+                vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
-                -- mappings.
-                -- see `:help vim.lsp.*` for documentation on any of the below functions
-                vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
-                vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
-                vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
-                vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
-                vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
-                vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<cr>', opts)
-                vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<cr>', opts)
-                vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<cr>', opts)
-                vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
-                vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
-                vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>a', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
-                vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
-                vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><leader>f', '<cmd>lua vim.lsp.buf.formatting_sync()<cr>', opts)
-            end
+                -- Buffer local mappings.
+                -- See `:help vim.lsp.*` for documentation on any of the below functions
+                local opts = { buffer = ev.buf }
+                vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+                vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+                vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+                vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+                vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+                vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
+                vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
+                vim.keymap.set('n', '<leader>wl', function()
+                  print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+                end, opts)
+                vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
+                vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+                vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
+                vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+                vim.keymap.set('n', '<leader>f', function()
+                  vim.lsp.buf.format { async = true }
+                end, opts)
+              end,
+            })
 
-            local capabilities = vim.lsp.protocol.make_client_capabilities()
-            capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-
-            ---- clangd extensions config
-            require("clangd_extensions").setup{
-                server = {
-                    on_attach = on_attach,
-                    capabilities = capabilities,
-
-                    initialization_options = {
-                        fallback_flags = { "-std=c++2b" },
-                    },
-                    cmd = {
-                        "clangd",
-                        "-j=4",
-                        "--background-index",
-                        "--clang-tidy",
-                        "--fallback-style=llvm",
-                        "--all-scopes-completion",
-                        "--completion-style=detailed",
-                        "--header-insertion=iwyu",
-                        "--header-insertion-decorators",
-                        "--pch-storage=memory",
-                    },
-                },
-                extensions = {
-                    -- automatically set inlay hints (type hints)
-                    autosethints = true,
-                    -- whether to show hover actions inside the hover window
-                    -- this overrides the default hover handler
-                    hover_with_actions = true,
-                    -- these apply to the default clangdsetinlayhints command
-                    inlay_hints = {
-                        -- only show inlay hints for the current line
-                        only_current_line = false,
-                        -- event which triggers a refersh of the inlay hints.
-                        -- you can make this "cursormoved" or "cursormoved,cursormovedi" but
-                        -- not that this may cause  higher cpu usage.
-                        -- this option is only respected when only_current_line and
-                        -- autosethints both are true.
-                        only_current_line_autocmd = "cursorhold",
-                        -- whether to show parameter hints with the inlay hints or not
-                        show_parameter_hints = false,
-                        -- prefix for parameter hints
-                        parameter_hints_prefix = "<- ",
-                        -- prefix for all the other hints (type, chaining)
-                        other_hints_prefix = "=> ",
-                        -- whether to align to the length of the longest line in the file
-                        max_len_align = false,
-                        -- padding from the left if max_len_align is true
-                        max_len_align_padding = 1,
-                        -- whether to align to the extreme right or not
-                        right_align = true,
-                        -- padding from the right if right_align is true
-                        right_align_padding = 7,
-                        -- the color of the hints
-                        highlight = "comment",
-                        -- the highlight group priority for extmark
-                        priority = 100,
-                    },
-                    ast = {
-                        role_icons = {
-                            type = "",
-                            declaration = "",
-                            expression = "",
-                            specifier = "",
-                            statement = "",
-                            ["template argument"] = "",
-                        },
-
-                        kind_icons = {
-                            compound = "",
-                            recovery = "",
-                            translationunit = "",
-                            packexpansion = "",
-                            templatetypeparm = "",
-                            templatetemplateparm = "",
-                            templateparamobject = "",
-                        },
-
-                        highlights = {
-                            detail = "comment",
-                        },
-                        memory_usage = {
-                            border = "none",
-                        },
-                        symbol_info = {
-                            border = "none",
-                        },
-                    },
+            lspconfig.clangd.setup({
+                cmd = {
+                    "clangd",
+                    "-j=4",
+                    "--background-index",
+                    "--clang-tidy",
+                    "--fallback-style=llvm",
+                    "--all-scopes-completion",
+                    "--completion-style=detailed",
+                    "--header-insertion=iwyu",
+                    "--header-insertion-decorators",
+                    "--pch-storage=memory",
                 }
-            }
-        end,
+            })
+        end
     }, 
 
     { -- nvim-treesitter
@@ -812,16 +641,7 @@ require("lazy").setup({
 
                 highlight = {
                       enable = true,
-
-                      -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
-
-                      -- list of language that will be disabled
                       disable = { },
-
-                      -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-                      -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-                      -- Using this option may slow down your editor, and you may see some duplicate highlights.
-                      -- Instead of true it can also be a list of languages
                       additional_vim_regex_highlighting = false,
                 },
             }
@@ -842,169 +662,89 @@ require("lazy").setup({
         'hrsh7th/nvim-cmp',
         event = "InsertEnter",
         dependencies = {
-            -- snippets
-            "L3MON4D3/Luasnip",
-            
-            -- cmp
-            'hrsh7th/cmp-nvim-lua',
-            "petertriho/cmp-git",
-            'hrsh7th/cmp-nvim-lsp-signature-help',
-            'hrsh7th/cmp-nvim-lsp-document-symbol',
-            "hrsh7th/cmp-cmdline",
-            'saadparwaiz1/cmp_luasnip',
-            "hrsh7th/cmp-path",
-            "hrsh7th/cmp-nvim-lsp",
-            "hrsh7th/cmp-buffer",
+            { "onsails/lspkind-nvim" }, -- 为补全添加类似 vscode 的图标
+			{ "hrsh7th/vim-vsnip" }, -- vsnip 引擎，用于获得代码片段支持
+			{ "hrsh7th/cmp-vsnip" }, -- 适用于 vsnip 的代码片段源
+			{ "hrsh7th/cmp-nvim-lsp" }, -- 替换内置 omnifunc，获得更多补全
+			{ "hrsh7th/cmp-path" }, -- 路径补全
+			{ "hrsh7th/cmp-buffer" }, -- 缓冲区补全
+			{ "hrsh7th/cmp-cmdline" }, -- 命令补全
+			{ "f3fora/cmp-spell" }, -- 拼写建议
+			{ "rafamadriz/friendly-snippets" }, -- 提供多种语言的代码片段
+			{ "lukas-reineke/cmp-under-comparator" }, -- 让补全结果的排序更加智能}}
         },
 
         config = function()
-            vim.cmd [[set completeopt=menu,menuone,noselect]]
-
-            -- setup nvim-cmp.
-            local cmp = require('cmp')
-            local luasnip = require("luasnip")
-
-            local has_words_before = function()
-              local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-              return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-            end
-
-            local kind_icons = {
-                Text = "",
-                Method = "",
-                Function = "",
-                Constructor = "",
-                Field = "",
-                Variable = "",
-                Class = "ﴯ",
-                Interface = "",
-                Module = "",
-                Property = "ﰠ",
-                Unit = "",
-                Value = "",
-                Enum = "",
-                Keyword = "",
-                Snippet = "",
-                Color = "",
-                File = "",
-                Reference = "",
-                Folder = "",
-                EnumMember = "",
-                Constant = "",
-                Struct = "",
-                Event = "",
-                Operator = "",
-                TypeParameter = ""
-            }
-
+            local lspkind = require("lspkind")
+            local cmp = require("cmp")
             cmp.setup({
                 snippet = {
-                    -- required - you must specify a snippet engine
                     expand = function(args)
-                        luasnip.lsp_expand(args.body) -- for `luasnip` users.
+                        vim.fn["vsnip#anonymous"](args.body)
                     end,
                 },
-
-                window = {
-                    completion = cmp.config.window.bordered(),
-                    documentation = cmp.config.window.bordered(),
-                },
-
-                mapping = cmp.mapping.preset.insert({
-                    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-                    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-                    ['<C-e>'] = cmp.mapping.abort(),
-                    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- accept currently selected item. set `select` to `false` to only confirm explicitly selected items.
-                    ["<Tab>"] = cmp.mapping(function(fallback)
-                        if cmp.visible() then
-                            cmp.select_next_item()
-                        elseif luasnip.expand_or_jumpable() then
-                            luasnip.expand_or_jump()
-                        elseif has_words_before() then
-                            cmp.complete()
-                        else
-                            fallback()
-                        end
-                    end, { "i", "s" }),
-
-                    ["<S-Tab>"] = cmp.mapping(function(fallback)
-                        if cmp.visible() then
-                            cmp.select_prev_item()
-                        elseif luasnip.jumpable(-1) then
-                            luasnip.jump(-1)
-                        else
-                            fallback()
-                        end
-                    end, { "i", "s" }),
+                -- 补全源的排序
+                sources = cmp.config.sources({
+                    { name = "nvim_lsp" },
+                    { name = "vsnip" },
+                    { name = "path" },
+                    { name = "buffer" },
+                    { name = "cmdline" },
+                    { name = "spell" },
                 }),
-
-                sources = cmp.config.sources(
-                    {
-                        { name = 'nvim_lsp_document_symbol' },
-                        { name = 'nvim_lsp' },
-                        { name = 'luasnip' }, -- for luasnip users.
-                    }, 
-                    {
-                        { name = 'buffer' },
-                        { name = 'nvim_lsp_signature_help' },
-                        { name = 'path'},
-                    }
-                ),
-
+                -- 格式化补全菜单
                 formatting = {
-                format = function(entry, vim_item)
-                  -- kind icons
-                  vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- this concatonates the icons with the name of the item kind
-                  -- source
-                  vim_item.menu = ({
-                    buffer = "[Buffer]",
-                    nvim_lsp = "[Lsp]",
-                    luasnip = "[Luasnip]",
-                    nvim_lua = "[Lua]",
-                    latex_symbols = "[Latex]",
-                  })[entry.source.name]
-                  return vim_item
-                end
-              },
-              sorting = {
+                    format = lspkind.cmp_format({
+                        with_text = true,
+                        maxwidth = 50,
+                        before = function(entry, vim_item)
+                            vim_item.menu = "[" .. string.upper(entry.source.name) .. "]"
+                            return vim_item
+                        end,
+                    }),
+                },
+                -- 对补全建议排序
+                sorting = {
                     comparators = {
                         cmp.config.compare.offset,
                         cmp.config.compare.exact,
+                        cmp.config.compare.score,
                         cmp.config.compare.recently_used,
-                        require("clangd_extensions.cmp_scores"),
+                        require("cmp-under-comparator").under,
                         cmp.config.compare.kind,
                         cmp.config.compare.sort_text,
                         cmp.config.compare.length,
                         cmp.config.compare.order,
                     },
                 },
+                -- 补全相关的按键
+                mapping = {
+
+                    -- ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+                    -- ["<C-f>"] = cmp.mapping.scroll_docs(4),
+                    ["<C-p>"] = cmp.mapping.select_prev_item(),
+                    -- 选择下一个
+                    ["<C-n>"] = cmp.mapping.select_next_item(),
+                    ["<Tab>"] = cmp.mapping.select_next_item(),
+                    ["<Up>"] = cmp.mapping.select_prev_item(),
+                    ["<Down>"] = cmp.mapping.select_next_item(),
+                    ["<CR>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Insert }),
+                },
             })
 
-            -- set configuration for specific filetype.
-            cmp.setup.filetype('gitcommit', {
-                sources = cmp.config.sources({
-                    { name = 'cmp_git' }, -- you can specify the `cmp_git` source if you were installed it.
-                }, {
-                    { name = 'buffer' },
-                })
-            })
-
-            -- use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-            cmp.setup.cmdline('/', {
-                mapping = cmp.mapping.preset.cmdline(),
+            -- vim的"/"命令模式提示
+            cmp.setup.cmdline({ "/", "?" }, {
                 sources = {
-                    { name = 'buffer' }
-                }
+                    { name = "buffer" },
+                },
             })
-
-            -- use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-            cmp.setup.cmdline(':', {
-                mapping = cmp.mapping.preset.cmdline(),
+            -- vim的":"命令模式提示
+            cmp.setup.cmdline(":", {
                 sources = cmp.config.sources({
-                    { name = 'path' }
+                    { name = "path" },
                 }, {
-                    { name = 'cmdline' }
-                })
+                    { name = "cmdline" },
+                }),
             })
         end
     },
@@ -1047,17 +787,9 @@ require("lazy").setup({
             })
         end
     },
-
 }, 
 {
   defaults = {
     lazy = true, -- should plugins be lazy-loaded?
-  },
-  checker = {
-    -- automatically check for plugin updates
-    enabled = true,
-    concurrency = 1, ---@type number? set to 1 to check for updates very slowly
-    notify = true, -- get a notification when new updates are found
-    frequency = 36000, -- check for updates every hour
-  },
+  }
 })
