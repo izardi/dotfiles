@@ -3,7 +3,6 @@
 local op = vim.opt
 
 op.showmode = false
-
 op.backup = false
 op.hlsearch = true
 op.ignorecase = true
@@ -111,7 +110,8 @@ require("lazy").setup({
     { -- themes
 
         'liuchengxu/space-vim-theme',
-        lazy = false, -- make sure we load this during startup if it is your main colorscheme
+        event = "VimEnter",
+        -- make sure we load this during startup if it is your main colorscheme
         priority = 1000, -- make sure to load this before all the other start plugins
 
         config = function()
@@ -122,8 +122,8 @@ require("lazy").setup({
 
     { -- which-key
         
-        event = "VeryLazy",
         "folke/which-key.nvim",
+        event = "VeryLazy",
         init = function()
             vim.o.timeout = true
             vim.o.timeoutlen = 300
@@ -139,6 +139,7 @@ require("lazy").setup({
 
         'nvim-telescope/telescope.nvim',
         cmd = 'Telescope',
+        
         dependencies = 'nvim-lua/plenary.nvim',
         keys = {
             { "<leader>ff", ":Telescope find_files<CR>", desc = "find files" },
@@ -152,7 +153,6 @@ require("lazy").setup({
 
         "kdheepak/lazygit.nvim",
         dependencies = "nvim-lua/plenary.nvim",
-
         keys = {
             { "<leader>lz", ":LazyGit<CR>", desc = "LazyGit" }
         }
@@ -162,10 +162,13 @@ require("lazy").setup({
 
         'akinsho/toggleterm.nvim',
         config = function()
+            vim.keymap.set('t', '<esc>', [[<C-\><C-n>]])
+
             require("toggleterm").setup({})
         end,
         keys = {
-            {'<leader>tt', '<Cmd>exe v:count1 . "ToggleTerm"<CR>'},
+            {'<leader>tt', '<Cmd>exe v:count1 . "ToggleTerm"<CR>', {noremap = true, silent = true}},
+            {'<leader>tt', '<Esc><Cmd>exe v:count1 . "ToggleTerm"<CR>', 'i', {noremap = true, silent = true}}
         }
     },
 
@@ -174,213 +177,60 @@ require("lazy").setup({
         "lukas-reineke/indent-blankline.nvim",
         lazy = false,
         config = function()
-            vim.g.indent_blankline_buftype_exclude = { "terminal", "nofile" }
-            vim.g.indent_blankline_filetype_exclude = {
-                "help",
-                "startify",
-                "dashboard",
-                "packer",
-                "neogitstatus",
-                "NvimTree",
-                "Trouble",
-            }
-            vim.g.indentLine_enabled = 1
-            -- vim.g.indent_blankline_char = "│"
-            vim.g.indent_blankline_char = "▏"
-            -- vim.g.indent_blankline_char = "▎"
+            vim.g.indent_blankline_char_list = {'|', '¦', '┆', '┊'}
             vim.g.indent_blankline_show_trailing_blankline_indent = false
             vim.g.indent_blankline_show_first_indent_level = true
             vim.g.indent_blankline_use_treesitter = true
             vim.g.indent_blankline_show_current_context = true
-            vim.g.indent_blankline_context_patterns = {
-                "class",
-                "return",
-                "function",
-                "method",
-                "^if",
-                "^while",
-                "jsx_element",
-                "^for",
-                "^object",
-                "^table",
-                "block",
-                "arguments",
-                "if_statement",
-                "else_clause",
-                "jsx_element",
-                "jsx_self_closing_element",
-                "try_statement",
-                "catch_clause",
-                "import_statement",
-                "operation_type",
-            }
-            -- HACK: work-around for https://github.com/lukas-reineke/indent-blankline.nvim/issues/59
-            vim.wo.colorcolumn = "99999"
-
-            -- vim.cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
-            -- vim.cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
-            -- vim.cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
-            -- vim.cmd [[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]]
-            -- vim.cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]]
-            -- vim.cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
-            -- vim.opt.list = true
-            -- vim.opt.listchars:append "space:⋅"
-            -- vim.opt.listchars:append "space:"
-            -- vim.opt.listchars:append "eol:↴"
-
             require("indent_blankline").setup({
-
-                -- show_end_of_line = true,
-                -- space_char_blankline = " ",
+                show_end_of_line = true,
                 show_current_context = true,
-                -- show_current_context_start = true,
-                -- char_highlight_list = {
-                --   "IndentBlanklineIndent1",
-                --   "IndentBlanklineIndent2",
-                --   "IndentBlanklineIndent3",
-                -- },
             })
         end
     },
     
     { -- todo-comments
 
-      "folke/todo-comments.nvim",
-      cmd = { "TodoTrouble", "TodoTelescope" },
-      event = { "BufReadPost", "BufNewFile" },
-      config = true,
-      -- stylua: ignore
-      keys = {
-        { "]t", function() require("todo-comments").jump_next() end, desc = "Next todo comment" },
-        { "[t", function() require("todo-comments").jump_prev() end, desc = "Previous todo comment" },
-        { "<leader>xt", "<cmd>TodoTrouble<cr>", desc = "Todo (Trouble)" },
-        { "<leader>xT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme (Trouble)" },
-        { "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Todo" },
-        { "<leader>sT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme" },
-      },
+        "folke/todo-comments.nvim",
+        cmd = { "TodoTrouble", "TodoTelescope" },
+        event = { "BufReadPost", "BufNewFile" },
+        config = true,
+        keys = {
+            { "]t", function() require("todo-comments").jump_next() end, desc = "Next todo comment" },
+            { "[t", function() require("todo-comments").jump_prev() end, desc = "Previous todo comment" },
+            { "<leader>xt", "<cmd>TodoTrouble<cr>", desc = "Todo (Trouble)" },
+            { "<leader>xT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme (Trouble)" },
+            { "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Todo" },
+            { "<leader>sT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme" },
+        },
     },
 
     { -- lualine
 
         'nvim-lualine/lualine.nvim',
-        lazy = false,
+        event = "VeryLazy",
         dependencies = 'nvim-tree/nvim-web-devicons',
         config = function()
-
-            local hide_in_width = function()
-                return vim.fn.winwidth(0) > 80
-            end
-
-            local diagnostics = {
-                "diagnostics",
-                sources = { "nvim_diagnostic" },
-                sections = { "error", "warn" },
-                symbols = { error = " ", warn = " " },
-                colored = false,
-                update_in_insert = false,
-                always_visible = true,
-            }
-
-            local diff = {
-                "diff",
-                colored = true,
-                symbols = { added = "  ", modified = " ", removed = " " },
-                diff_color = {
-                    added = { fg = "#98be65" },
-                    modified = { fg = "#ecbe7b" },
-                    removed = { fg = "#ec5f67" },
-                },
-                cond = hide_in_width
-            }
-
-            local mode = {
-                "mode",
-                fmt = function(str)
-                    return "-- " .. str .. " --"
-                end
-            }
-
-
-            local file_name = {
-                'filename',
-                file_status = true, -- Displays file status (readonly status, modified status)
-                path = 1, -- 0: Just the filename
-                -- 1: Relative path
-                -- 2: Absolute path
-
-                shorting_target = 40, -- Shortens path to leave 40 spaces in the window
-                -- for other components. (terrible name, any suggestions?)
-                symbols = {
-                    modified = '[+]', -- Text to show when the file is modified.
-                    readonly = '[-]', -- Text to show when the file is non-modifiable or readonly.
-                    unnamed = '[No Name]', -- Text to show for unnamed buffers.
-                },
-            }
-
-            local filetype = {
-                "filetype",
-                icons_enabled = false,
-                icon = nil,
-            }
-
-            local branch = {
-                "branch",
-                icons_enabled = true,
-                icon = "",
-            }
-
-            local location = {
-                "location",
-                padding = 0,
-            }
-
-            -- cool function for progress
-            local progress = function()
-                local current_line = vim.fn.line(".")
-                local total_lines = vim.fn.line("$")
-                -- local chars = { "__", "▁▁", "▂▂", "▃▃", "▄▄", "▅▅", "▆▆", "▇▇", "██" }
-                local chars = { "██", "▇▇", "▆▆", "▅▅", "▄▄", "▃▃", "▂▂", "▁▁", " ", }
-                local line_ratio = current_line / total_lines
-                local index = math.ceil(line_ratio * #chars)
-                return chars[index]
-            end
-
-            local spaces = function()
-                return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
-            end
-
-            -- add gps module to get the position information
-            -- local gps = require("nvim-gps")
-
             require("lualine").setup({
-                options = {
-                    icons_enabled = true,
-                    theme = "auto",
-                    component_separators = { left = "", right = "" },
-                    section_separators = { left = "", right = "" },
-                    -- component_separators = { left = "", right = "" },
-                    -- section_separators = { left = "", right = "" },
-                    disabled_filetypes = { "alpha", "dashboard", "NvimTree", "Outline" },
-                    always_divide_middle = true,
-                },
                 sections = {
-                    lualine_a = { branch, diagnostics },
-                    lualine_b = { mode },
-                    lualine_c = { file_name },
-                    lualine_x = { diff, spaces, "encoding", filetype, "fileformat" },
-                    lualine_y = { location },
-                    lualine_z = { progress },
-                },
-                inactive_sections = {
-                    lualine_a = {},
-                    lualine_b = {},
-                    lualine_c = { file_name },
-                    lualine_x = { "location" },
-                    lualine_y = {},
-                    lualine_z = {},
-                },
-                tabline = {},
-                extensions = {},
+                    lualine_b = {
+                        {"branch"},
+                        {
+                            'diff',
+                            colored = true,
+                            symbols = {added = ' ', modified = ' ', removed = ' '}, -- Changes the symbols used by the diff.
+                        },
+                        {
+                            "diagnostics",
+                            sources = { "nvim_diagnostic" },
+                            sections = { "error", "warn" },
+                            symbols = { error = " ", warn = " " },
+                            colored = true,
+                            update_in_insert = true,
+                            always_visible = true,
+                        },
+                    }
+                }
             })
         end
     },
@@ -388,90 +238,50 @@ require("lazy").setup({
     { -- trouble
 
         "folke/trouble.nvim",
-        dependencies = "nvim-tree/nvim-web-devicons",
-
-        config = function()
-
-            local opts = {silent = true, noremap = true}
-            vim.keymap.set("n", "<leader>xx", "<cmd>TroubleToggle<cr>", opts)
-            vim.keymap.set("n", "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>", opts)
-            vim.keymap.set("n", "<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>", opts);
-            vim.keymap.set("n", "<leader>xl", "<cmd>TroubleToggle loclist<cr>", opts)
-            vim.keymap.set("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>", opts);
-            vim.keymap.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>", opts);
-
-            require("trouble").setup({})
-        end
+        cmd = { "TroubleToggle", "Trouble" },
+        opts = { use_diagnostic_signs = true },
+        keys = {
+            { "<leader>xx", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Document Diagnostics (Trouble)" },
+            { "<leader>xX", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Workspace Diagnostics (Trouble)" },
+            { "<leader>xL", "<cmd>TroubleToggle loclist<cr>", desc = "Location List (Trouble)" },
+            { "<leader>xQ", "<cmd>TroubleToggle quickfix<cr>", desc = "Quickfix List (Trouble)" },
+            {
+                "[q",
+                function()
+                  if require("trouble").is_open() then
+                    require("trouble").previous({ skip_groups = true, jump = true })
+                  else
+                    local ok, err = pcall(vim.cmd.cprev)
+                    if not ok then
+                      vim.notify(err, vim.log.levels.ERROR)
+                    end
+                  end
+                end,
+                desc = "Previous trouble/quickfix item",
+            },
+            {
+                "]q",
+                function()
+                  if require("trouble").is_open() then
+                    require("trouble").next({ skip_groups = true, jump = true })
+                  else
+                    local ok, err = pcall(vim.cmd.cnext)
+                    if not ok then
+                      vim.notify(err, vim.log.levels.ERROR)
+                    end
+                  end
+                end,
+                desc = "Next trouble/quickfix item",
+            },
+        },
     },
-
-
-    { -- null-ls
-
-        "jose-elias-alvarez/null-ls.nvim",
-        event = "InsertEnter",
-        dependencies = 'nvim-lua/plenary.nvim',
-
-        config = function()
-            local nl = require("null-ls")
-            local sources = {
-                nl.builtins.diagnostics.clang_check,
-                nl.builtins.formatting.clang_format,
-            }
-            nl.setup({
-                sources = sources,
-                on_attach = on_attach,
-            })
-        end
-    },
-
 
     { -- gitsigns
 
         'lewis6991/gitsigns.nvim',
         event = { "BufReadPre", "BufNewFile" },
         config = function()
-            require('gitsigns').setup {
-                signs = {
-                    add          = { text = '│' },
-                    change       = { text = '│' },
-                    delete       = { text = '_' },
-                    topdelete    = { text = '‾' },
-                    changedelete = { text = '~' },
-                    untracked    = { text = '┆' },
-                },
-                signcolumn = true,  -- Toggle with `:Gitsigns toggle_signs`
-                numhl      = false, -- Toggle with `:Gitsigns toggle_numhl`
-                linehl     = false, -- Toggle with `:Gitsigns toggle_linehl`
-                word_diff  = false, -- Toggle with `:Gitsigns toggle_word_diff`
-                watch_gitdir = {
-                    interval = 1000,
-                    follow_files = true
-                },
-                attach_to_untracked = true,
-                current_line_blame = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
-                current_line_blame_opts = {
-                    virt_text = true,
-                    virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
-                    delay = 1000,
-                    ignore_whitespace = false,
-                },
-                current_line_blame_formatter = '<author>, <author_time:%Y-%m-%d> - <summary>',
-                sign_priority = 6,
-                update_debounce = 100,
-                status_formatter = nil, -- Use default
-                max_file_length = 40000, -- Disable if file is longer than this (in lines)
-                preview_config = {
-                    -- Options passed to nvim_open_win
-                    border = 'single',
-                    style = 'minimal',
-                    relative = 'cursor',
-                    row = 0,
-                    col = 1
-                },
-                yadm = {
-                    enable = false
-                },
-            }
+            require('gitsigns').setup();
         end
     },
 
@@ -515,14 +325,6 @@ require("lazy").setup({
         'windwp/nvim-autopairs',
         event = "InsertEnter",
         config = function()
-            local rule = require('nvim-autopairs.rule')
-            local status_ok, npairs = pcall(require, 'nvim-autopairs')
-        
-            if not status_ok then
-                vim.notify("auto-paris don't exists")
-                return
-            end
-        
             require('nvim-autopairs').setup({
                 check_ts = true,
                 ts_config = {
@@ -548,7 +350,6 @@ require("lazy").setup({
             cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({  map_char = { tex = '' } }))
         end
     },
-
 
     { -- nvim-lspconfig
 
@@ -648,103 +449,207 @@ require("lazy").setup({
         end
     },
 
-    { -- Luasnip
+    { -- LuaSnip
 
-        "L3MON4D3/Luasnip",
-        dependencies = "rafamadriz/friendly-snippets",
-        config = function()
+        "L3MON4D3/LuaSnip",
+        build = (not jit.os:find("Windows"))
+            and "echo 'NOTE: jsregexp is optional, so not a big deal if it fails to build'; make install_jsregexp"
+          or nil,
+        dependencies = {
+          "rafamadriz/friendly-snippets",
+          config = function()
             require("luasnip.loaders.from_vscode").lazy_load()
-        end
-    },
+          end,
+        },
+        opts = {
+          history = true,
+          delete_check_events = "TextChanged",
+        },
+        keys = {
+            {
+              "<tab>",
+              function()
+                return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
+              end,
+              expr = true, silent = true, mode = "i",
+            },
+            { "<tab>", function() require("luasnip").jump(1) end, mode = "s" },
+            { "<s-tab>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
+        },
+	},
 
     { -- nvim-cmp
-        
-        'hrsh7th/nvim-cmp',
+
+        "hrsh7th/nvim-cmp",
+        version = false, -- last release is way too old
         event = "InsertEnter",
         dependencies = {
-            { "onsails/lspkind-nvim" }, -- 为补全添加类似 vscode 的图标
-			{ "hrsh7th/vim-vsnip" }, -- vsnip 引擎，用于获得代码片段支持
-			{ "hrsh7th/cmp-vsnip" }, -- 适用于 vsnip 的代码片段源
-			{ "hrsh7th/cmp-nvim-lsp" }, -- 替换内置 omnifunc，获得更多补全
-			{ "hrsh7th/cmp-path" }, -- 路径补全
-			{ "hrsh7th/cmp-buffer" }, -- 缓冲区补全
-			{ "hrsh7th/cmp-cmdline" }, -- 命令补全
-			{ "f3fora/cmp-spell" }, -- 拼写建议
-			{ "rafamadriz/friendly-snippets" }, -- 提供多种语言的代码片段
-			{ "lukas-reineke/cmp-under-comparator" }, -- 让补全结果的排序更加智能}}
+            "petertriho/cmp-git",
+            "hrsh7th/cmp-nvim-lsp",
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-path",
+            "hrsh7th/cmp-cmdline",
+            "hrsh7th/cmp-nvim-lsp-signature-help",
+            "hrsh7th/cmp-nvim-lsp-document-symbol",
+            "saadparwaiz1/cmp_luasnip",
         },
-
         config = function()
-            local lspkind = require("lspkind")
-            local cmp = require("cmp")
+            vim.cmd [[set completeopt=menu,menuone,noselect]]
+
+            -- setup nvim-cmp.
+            local cmp = require('cmp')
+            local luasnip = require("luasnip")
+
+            local has_words_before = function()
+              local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+              return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+            end
+
+            local kind_icons = {
+                Array = " ",
+                Boolean = " ",
+                Class = " ",
+                Color = " ",
+                Constant = " ",
+                Constructor = " ",
+                Copilot = " ",
+                Enum = " ",
+                EnumMember = " ",
+                Event = " ",
+                Field = " ",
+                File = " ",
+                Folder = " ",
+                Function = " ",
+                Interface = " ",
+                Key = " ",
+                Keyword = " ",
+                Method = " ",
+                Module = " ",
+                Namespace = " ",
+                Null = " ",
+                Number = " ",
+                Object = " ",
+                Operator = " ",
+                Package = " ",
+                Property = " ",
+                Reference = " ",
+                Snippet = " ",
+                String = " ",
+                Struct = " ",
+                Text = " ",
+                TypeParameter = " ",
+                Unit = " ",
+                Value = " ",
+                Variable = " ",
+            }
+
             cmp.setup({
                 snippet = {
+                    -- required - you must specify a snippet engine
                     expand = function(args)
-                        vim.fn["vsnip#anonymous"](args.body)
+                        luasnip.lsp_expand(args.body) -- for `luasnip` users.
                     end,
                 },
-                -- 补全源的排序
-                sources = cmp.config.sources({
-                    { name = "nvim_lsp" },
-                    { name = "vsnip" },
-                    { name = "path" },
-                    { name = "buffer" },
-                    { name = "cmdline" },
-                    { name = "spell" },
-                }),
-                -- 格式化补全菜单
-                formatting = {
-                    format = lspkind.cmp_format({
-                        with_text = true,
-                        maxwidth = 50,
-                        before = function(entry, vim_item)
-                            vim_item.menu = "[" .. string.upper(entry.source.name) .. "]"
-                            return vim_item
-                        end,
-                    }),
+
+                window = {
+                    completion = cmp.config.window.bordered(),
+                    documentation = cmp.config.window.bordered(),
                 },
-                -- 对补全建议排序
-                sorting = {
+
+                mapping = cmp.mapping.preset.insert({
+                    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+                    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+                    ['<C-e>'] = cmp.mapping.abort(),
+                    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- accept currently selected item. set `select` to `false` to only confirm explicitly selected items.
+                    ["<Tab>"] = cmp.mapping(function(fallback)
+                        if cmp.visible() then
+                            cmp.select_next_item()
+                        elseif luasnip.expand_or_jumpable() then
+                            luasnip.expand_or_jump()
+                        elseif has_words_before() then
+                            cmp.complete()
+                        else
+                            fallback()
+                        end
+                    end, { "i", "s" }),
+
+                    ["<S-Tab>"] = cmp.mapping(function(fallback)
+                        if cmp.visible() then
+                            cmp.select_prev_item()
+                        elseif luasnip.jumpable(-1) then
+                            luasnip.jump(-1)
+                        else
+                            fallback()
+                        end
+                    end, { "i", "s" }),
+                }),
+
+                sources = cmp.config.sources(
+                    {
+                        { name = 'nvim_lsp_document_symbol' },
+                        { name = 'nvim_lsp' },
+                        { name = 'luasnip' }, -- for luasnip users.
+                    }, 
+                    {
+                        { name = 'buffer' },
+                        { name = 'nvim_lsp_signature_help' },
+                        { name = 'path'},
+                    }
+                ),
+
+                formatting = {
+                format = function(entry, vim_item)
+                  -- kind icons
+                  vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- this concatonates the icons with the name of the item kind
+                  -- source
+                  vim_item.menu = ({
+                    buffer = "[Buffer]",
+
+                    nvim_lsp = "[Lsp]",
+                    luasnip = "[Luasnip]",
+                    nvim_lua = "[Lua]",
+                    latex_symbols = "[Latex]",
+                  })[entry.source.name]
+                  return vim_item
+                end
+              },
+              sorting = {
                     comparators = {
                         cmp.config.compare.offset,
                         cmp.config.compare.exact,
-                        cmp.config.compare.score,
                         cmp.config.compare.recently_used,
-                        require("cmp-under-comparator").under,
                         cmp.config.compare.kind,
                         cmp.config.compare.sort_text,
                         cmp.config.compare.length,
                         cmp.config.compare.order,
                     },
                 },
-                -- 补全相关的按键
-                mapping = {
-
-                    -- ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-                    -- ["<C-f>"] = cmp.mapping.scroll_docs(4),
-                    ["<C-p>"] = cmp.mapping.select_prev_item(),
-                    -- 选择下一个
-                    ["<C-n>"] = cmp.mapping.select_next_item(),
-                    ["<Tab>"] = cmp.mapping.select_next_item(),
-                    ["<Up>"] = cmp.mapping.select_prev_item(),
-                    ["<Down>"] = cmp.mapping.select_next_item(),
-                    ["<CR>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Insert }),
-                },
             })
-
-            -- vim的"/"命令模式提示
-            cmp.setup.cmdline({ "/", "?" }, {
-                sources = {
-                    { name = "buffer" },
-                },
-            })
-            -- vim的":"命令模式提示
-            cmp.setup.cmdline(":", {
+            -- set configuration for specific filetype.
+            cmp.setup.filetype('gitcommit', {
                 sources = cmp.config.sources({
-                    { name = "path" },
+                    { name = 'cmp_git' }, -- you can specify the `cmp_git` source if you were installed it.
                 }, {
-                    { name = "cmdline" },
-                }),
+                    { name = 'buffer' },
+                })
+            })
+
+            -- use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+            cmp.setup.cmdline('/', {
+                mapping = cmp.mapping.preset.cmdline(),
+                sources = {
+                    { name = 'buffer' }
+                }
+            })
+
+            -- use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+            cmp.setup.cmdline(':', {
+                mapping = cmp.mapping.preset.cmdline(),
+                sources = cmp.config.sources({
+                    { name = 'path' }
+                }, {
+                    { name = 'cmdline' }
+                })
             })
         end
     },
@@ -789,7 +694,7 @@ require("lazy").setup({
     },
 }, 
 {
-  defaults = {
-    lazy = true, -- should plugins be lazy-loaded?
-  }
+    defaults = {
+        lazy = true, -- should plugins be lazy-loaded?
+    }
 })
