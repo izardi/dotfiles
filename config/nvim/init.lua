@@ -361,21 +361,24 @@ require("lazy").setup({
 
             -- basic diagnostic config
             vim.diagnostic.config({
-                virtual_text = true,
-                signs = true,
                 underline = true,
                 update_in_insert = true,
-                severity_sort = false,
+                severity_sort = true,
+
+                virtual_text = {
+                    spacing = 8,
+                    prefix = "",
+                }
             })
 
             -- show symbols in line column
-            local signs = { error = " ", warn = " ", hint = " ", info = " " }
+            local signs = { Error = "❌", Warn = "⚠️", Hint = "💡", Info = "ℹ️" }
             for type, icon in pairs(signs) do
-                local hl = "diagnosticsign" .. type
+                local hl = "DiagnosticSign" .. type
                 vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
             end
 
-            vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
+            vim.keymap.set('n', '<leader>df', vim.diagnostic.open_float)
             vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
             vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
             vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
@@ -417,7 +420,7 @@ require("lazy").setup({
                     "-j=4",
                     "--background-index",
                     "--clang-tidy",
-                    "--clang-tidy-checks=clang-analyzer-*,cppcoreguidelines-*,modernize-*,performance-*,readability-*,bugprone-*",
+                    "--clang-tidy-checks=\"clang-analyzer-*,cppcoreguidelines-*,modernize-*,performance-*,readability-*,bugprone-*\"",
                     "--fallback-style=llvm",
                     "--all-scopes-completion",
                     "--completion-style=detailed",
@@ -425,17 +428,6 @@ require("lazy").setup({
                     "--header-insertion-decorators",
                     "--pch-storage=memory",
                 },
-                on_attach = function(client)
-                    -- 启用 clang-tidy
-                    client.resolved_capabilities.code_action = true
-                    client.resolved_capabilities.execute_command = true
-                end,
-                init_options = {
-                    clangdFileStatus = true,
-                    usePlaceholders = true,
-                    completeUnimported = true,
-                    semanticHighlighting = true
-                }
             })
         end
     }, 
