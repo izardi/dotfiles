@@ -372,7 +372,7 @@ require("lazy").setup({
             })
 
             -- show symbols in line column
-            local signs = { Error = "❌", Warn = "⚠️", Hint = "💡", Info = "ℹ️" }
+            local signs = { Error = "", Warn = "", Hint = "", Info = "" }
             for type, icon in pairs(signs) do
                 local hl = "DiagnosticSign" .. type
                 vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
@@ -661,6 +661,7 @@ require("lazy").setup({
     { -- coderunner
 
         "CRAG666/code_runner.nvim",
+        event = "VeryLazy",
         config = function()
             vim.keymap.set('n', '<leader>r', ':RunCode<CR>', { noremap = true, silent = false })
             vim.keymap.set('n', '<leader>rf', ':RunFile<CR>', { noremap = true, silent = false })
