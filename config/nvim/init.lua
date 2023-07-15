@@ -306,11 +306,6 @@ require("lazy").setup({
             require("bufferline").setup({
                 options = {
                     modified_icon = '●',
-                    diagnostics = "nvim_lsp",
-                    diagnostics_indicator = function(count, level)
-                        local icon = level:match("error") and " " or ""
-                        return " " .. icon .. count
-                    end,
                 }
             })
 	    end,
@@ -420,13 +415,14 @@ require("lazy").setup({
                     "-j=4",
                     "--background-index",
                     "--clang-tidy",
-                    "--clang-tidy-checks=\"clang-analyzer-*,cppcoreguidelines-*,modernize-*,performance-*,readability-*,bugprone-*\"",
-                    "--fallback-style=llvm",
+                    "--fallback-style=google",
                     "--all-scopes-completion",
                     "--completion-style=detailed",
+                    "--function-arg-placeholders",
                     "--header-insertion=iwyu",
                     "--header-insertion-decorators",
                     "--pch-storage=memory",
+                    "--enable-config"
                 },
             })
         end
