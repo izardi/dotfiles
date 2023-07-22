@@ -11,7 +11,7 @@ set $term alacritty
 
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu fuzzel -b 000000d8 -t ffffffd0
+set $menu fuzzel -b 000000d8 -t ffffffc0
 
 ### Output configuration
 
