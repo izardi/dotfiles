@@ -8,7 +8,7 @@ mount /dev/nvme0n1p1 /mnt/boot
 
 echo "Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/\$repo/os/\$arch" > /etc/pacman.d/mirrorlist
 
-pacstrap /mnt base base-devel linux-lts linux-firmware linux-lts-headers fish networkmanager dhcpcd openssh neovim git grub os-prober efibootmgr ntfs-3g intel-ucode man-db man-pages noto-fonts-cjk noto-fonts-emoji 
+pacstrap /mnt base base-devel linux-lts linux-firmware linux-lts-headers fish networkmanager dhcpcd openssh neovim git os-prober efibootmgr ntfs-3g intel-ucode man-db man-pages noto-fonts-cjk noto-fonts-emoji 
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
@@ -37,15 +37,8 @@ echo "input passwd(root)"
 
 passwd root
 
-nvim /etc/default/grub
-
-grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
-
-grub-mkconfig -o /boot/grub/grub.cfg
-
 useradd -m -G wheel -s /bin/fish -p yuhao yu
 
 visudo /etc/sudoers
 
-exit
-umount -R /mnt
+echo "set up the systemd-boot manual"

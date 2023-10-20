@@ -141,9 +141,9 @@ require("lazy").setup({
             dependencies = 'nvim-lua/plenary.nvim',
             keys = {
                 { "<leader>ff", ":Telescope find_files<CR>", desc = "find files" },
-                { "<leader>gf", ":Telescope live_grep<CR>",  desc = "grep files" },
+                { "<leader>fg", ":Telescope live_grep<CR>",  desc = "grep files" },
                 { "<leader>rs", ":Telescope resume<CR>",     desc = "resume" },
-                { "<leader>ol", ":Telescope oldfiles<CR>",   desc = "oldfiles" },
+                { "<leader>fo", ":Telescope oldfiles<CR>",   desc = "oldfiles" },
             }
         },
 

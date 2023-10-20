@@ -14,39 +14,35 @@ set $term alacritty
 set $menu fuzzel -b 000000d8 -t ffffffc0
 
 ### Output configuration
-
-output eDP-1 background /usr/share/backgrounds/Photo of Valley.jpg fill
-output eDP-1 scale 1.25
-output eDP-1 resolution 2160x1440 position 0,0
-
-#
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
+output eDP-1 {
+    background /home/yu/wallpapers/eric-welch-eRwWGWkh0vU-unsplash.jpg fill
+    scale 1.25
+    resolution 2160x1440 position 0,0
+}
+
+
 ### Idle configuration
-#
-# Example configuration:
-#
 exec swayidle -w \
-         timeout 300 'swaylock -f -k -l -i /usr/share/backgrounds/Photo of Valley.jpg' \
+         timeout 300 'swaylock -f -k -l --indicator-idle-visible -i /home/yu/wallpapers/eric-welch-eRwWGWkh0vU-unsplash.jpg' \
          timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-         before-sleep 'swaylock -f -k -l -i /usr/share/backgrounds/Photo of Valley.jpg'
+         before-sleep 'swaylock -f -k -l -i /home/yu/wallpapers/eric-welch-eRwWGWkh0vU-unsplash.jpg'
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.
 
 ### Input configuration
-#
-# Example configuration:
-#
-#   input "2:14:SynPS/2_Synaptics_TouchPad" {
-#       dwt enabled
-#       tap enabled
-#       natural_scroll enabled
-#       middle_emulation enabled
-#   }
-#
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
+
+input "1267:12496:ELAN962C:00_04F3:30D0_Touchpad" {
+    dwt enabled
+    tap enabled
+    natural_scroll enabled
+    middle_emulation enabled
+}
+
 
 ### Key bindings
 #
@@ -55,8 +51,8 @@ exec swayidle -w \
     # Start a terminal
     bindsym $mod+Return exec $term
 
-    # ranger
-    bindsym $mod+x exec $term -e ranger
+    # xplr
+    bindsym $mod+x exec $term -e xplr
 
     # Kill focused wimndow
     bindsym $mod+Shift+q kill
@@ -192,9 +188,6 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 
-# app quick key
-
-
 # audio control
 bindsym XF86AudioRaiseVolume exec sudo amixer -c 0 -q set Master 1dB+ unmute
 bindsym XF86AudioLowerVolume exec sudo amixer -c 0 -q set Master 1db- unmute
@@ -209,18 +202,18 @@ gaps outer 3
 
 #border
 default_border none
+
 # gtk themes
 set $gnome-schema org.gnome.desktop.interface
 exec_always {
-    gsettings set $gnome-schema gtk-theme 'Mint-Y-Dark'
-    gsettings set $gnome-schema icon-theme 'Marwaita-Dark'
+    gsettings set $gnome-schema color-scheme 'prefer-dark'
+    gsettings set $gnome-schema gtk-theme 'AWEL-Nior'
+    gsettings set $gnome-schema icon-theme 'elementary'
     gsettings set $gnome-schema cursor-theme 'volantes_cursors'
-    gsettings set org.gnome.desktop.interface cursor-size 24
     gsettings set $gnome-schema font-name 'Maple Mono SC NF Bold 12'
 }
 
 exec --no-startup-id waybar
 exec --no-startup-id fcitx5 -d
-
 
 include /etc/sway/config.d/*
