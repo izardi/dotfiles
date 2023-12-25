@@ -17,10 +17,11 @@ set $menu fuzzel -b 000000d8 -t ffffffc0
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
 output eDP-1 {
-    background /home/yu/wallpapers/eric-welch-eRwWGWkh0vU-unsplash.jpg fill
+    background /home/yu/wallpapers/christopher-kuzman-2LhCDvS_7xs-unsplash.jpg fill
     scale 1.25
     resolution 2160x1440 position 0,0
 }
+
 
 
 ### Idle configuration
@@ -208,12 +209,16 @@ set $gnome-schema org.gnome.desktop.interface
 exec_always {
     gsettings set $gnome-schema color-scheme 'prefer-dark'
     gsettings set $gnome-schema gtk-theme 'AWEL-Nior'
-    gsettings set $gnome-schema icon-theme 'elementary'
-    gsettings set $gnome-schema cursor-theme 'volantes_cursors'
+    gsettings set $gnome-schema icon-theme 'kora'
+#    gsettings set $gnome-schema cursor-theme 'volantes_cursors'
     gsettings set $gnome-schema font-name 'Maple Mono SC NF Bold 12'
 }
 
+# cursor theme
+
 exec --no-startup-id waybar
 exec --no-startup-id fcitx5 -d
+exec --no-startup-id blueman-applet
+exec --no-startup-id nm-applet
 
 include /etc/sway/config.d/*

@@ -176,16 +176,11 @@ require("lazy").setup({
         { -- indent-blankline
 
             "lukas-reineke/indent-blankline.nvim",
+            main = "ibl",
             lazy = false,
             config = function()
-                vim.g.indent_blankline_char_list = { '|', '¦', '┆', '┊' }
-                vim.g.indent_blankline_show_trailing_blankline_indent = false
-                vim.g.indent_blankline_show_first_indent_level = true
-                vim.g.indent_blankline_use_treesitter = true
-                vim.g.indent_blankline_show_current_context = true
-                require("indent_blankline").setup({
-                    show_end_of_line = true,
-                    show_current_context = true,
+                require("ibl").setup({
+                    indent = {char = "┊"}
                 })
             end
         },
@@ -433,19 +428,19 @@ require("lazy").setup({
 
             'nvim-treesitter/nvim-treesitter',
             event = { "BufReadPost", "BufNewFile" },
-            cmd = { "TSUpdateSync" },
+            build = ":TSUpdate",
             config = function()
                 require 'nvim-treesitter.configs'.setup {
                     ensure_installed = { "c", "lua", "cpp", "cmake", "markdown", "javascript", "rust" },
-
-                    sync_install = true,
+                    sync_install = false,
                     auto_install = true,
 
                     highlight = {
                         enable = true,
-                        disable = {},
-                        additional_vim_regex_highlighting = false,
                     },
+                    indent = {
+                        enable = true,
+                    }
                 }
             end
         },
