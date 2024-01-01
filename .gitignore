@@ -1,8 +1,7 @@
 /config/*
 !/config/nvim
 /config/nvim/lazy-lock.json
-!/config/nvim.bak
-!/config/alacritty.yml
+!/config/alacritty.toml
 !/config/clangd
 !/config/dconf
 !/config/electron-flags.conf
@@ -11,6 +10,11 @@
 !/config/gtk-3.0
 !/config/hypr
 !/config/lapce-stable
+!/config/Code - OSS/
+!/config/Code - OSS/User
+!/config/Code - OSS/User/settings.json
+!/config/code-flags.conf
+!/config/flameshot
 !/config/lazygit
 !/config/gitui
 !/config/mpv

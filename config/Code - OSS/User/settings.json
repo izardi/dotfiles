@@ -1,0 +1,11 @@
+{
+    "vscode-neovim.neovimClean": true,
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    },
+    "editor.fontFamily": "'Maple Mono SC NF', 'Fira Code', 'monospace'",
+    "editor.fontWeight": "700",
+    "editor.fontSize": 17,
+    "editor.lineHeight": 1.7,
+    "editor.fontLigatures": false
+}

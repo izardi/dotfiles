@@ -1,0 +1,13 @@
+[colors.primary]
+background = "0x000000"
+foreground = "0xffffff"
+
+[font]
+size = 12
+
+[font.normal]
+family = "Jetbrains Mono"
+style = "Bold"
+
+[window]
+opacity = 0.6
