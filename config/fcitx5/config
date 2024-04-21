@@ -5,7 +5,7 @@ EnumerateWithTriggerKeys=True
 EnumerateSkipFirst=False
 
 [Hotkey/TriggerKeys]
-0=Control+space
+0=Control+Shift+space
 1=Zenkaku_Hankaku
 2=Hangul
 
@@ -31,10 +31,10 @@ EnumerateSkipFirst=False
 0=Hangul_Romaja
 
 [Hotkey/PrevPage]
-0=Up
+0=comma
 
 [Hotkey/NextPage]
-0=Down
+0=period
 
 [Hotkey/PrevCandidate]
 0=Shift+Tab
@@ -72,4 +72,10 @@ EnabledAddons=
 DisabledAddons=
 # Preload input method to be used by default
 PreloadInputMethod=True
+# Allow input method in the password field
+AllowInputMethodForPassword=False
+# Show preedit text when typing password
+ShowPreeditForPassword=False
+# Interval of saving user data in minutes
+AutoSavePeriod=30
 

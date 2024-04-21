@@ -1,7 +1,7 @@
 # swayfx
 blur enable
 corner_radius 9
-default_dim_inactive 0.05
+default_dim_inactive 0.1
 blur_passes 2
 layer_effects "waybar" blur enable; blur_ignore_transparent enable; shadows enable; corner_radius 6
 
@@ -16,16 +16,17 @@ set $up k
 set $right l
 
 # Your preferred terminal emulator
-set $term alacritty
+set $term terminator
 
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu fuzzel -b 000000d8 -t ffffffc0 -f 'Jetbrains Mono' -i 'elementary'
+set $menu fuzzel -b 000000d8 -t ffffffc0 -f 'Maple Mono SC NF'
+
 
 ### Output configuration
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
-set $wallpaper /home/yu/Downloads/Starry_Night_Over_the_Rhone.jpeg 
+set $wallpaper /home/yu/Downloads/vally.jpg
 
 output eDP-1 {
     background $wallpaper fill
@@ -53,6 +54,9 @@ input "1267:12496:ELAN962C:00_04F3:30D0_Touchpad" {
     middle_emulation enabled
 }
 
+# float window
+for_window [window_type="dialog"] floating enable
+for_window [window_role="dialog"] floating enable
 
 ### Key bindings
 #
@@ -61,8 +65,8 @@ input "1267:12496:ELAN962C:00_04F3:30D0_Touchpad" {
     # Start a terminal
     bindsym $mod+Return exec $term
 
-    # xplr
-    bindsym $mod+x exec $term -e xplr
+    # file manager
+    bindsym $mod+x exec $term -e yazi
 
     # firefox
     bindsym $mod+q exec firefox
@@ -70,7 +74,7 @@ input "1267:12496:ELAN962C:00_04F3:30D0_Touchpad" {
     # Kill focused wimndow
     bindsym $mod+Shift+q kill
 
-    bindsym $mod+shift+s exec grim
+    bindsym $mod+shift+s exec slurp
 
     # Start your launcher
     bindsym $mod+d exec $menu
@@ -201,17 +205,15 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # quick key
-bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
-bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
-bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
-bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
-bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
-bindsym XF86MonBrightnessUp exec brightnessctl set 5%+
+bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym --locked XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym --locked XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
+bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
 
-# flameshot config
-exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
-exec hash dbus-update-activation-environment 2>/dev/null && \
-     dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
+# translate clipboard
+bindsym $mod+t exec ~/.config/sway/trans.sh
 
 #gaps
 gaps inner 3
@@ -224,16 +226,14 @@ default_border none
 set $gnome-schema org.gnome.desktop.interface
 exec_always {
     gsettings set $gnome-schema color-scheme 'prefer-dark'
-    gsettings set $gnome-schema gtk-theme 'Mint-Y-Dark-Teal'
+    gsettings set $gnome-schema gtk-theme 'Mint-Y-Dark-Purple'
     gsettings set $gnome-schema icon-theme 'elementary'
-#    gsettings set $gnome-schema cursor-theme 'Vimix-cursors'
-    gsettings set $gnome-schema cursor-size '25'
     gsettings set $gnome-schema font-name 'Maple Mono SC NF Bold 12'
 }
 
 exec --no-startup-id waybar
-exec --no-startup-id dunst
 exec --no-startup-id fcitx5 -d
+exec --no-startup-id mako
 # exec --no-startup-id blueman-applet
 # exec --no-startup-id nm-applet
 

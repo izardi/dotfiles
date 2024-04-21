@@ -1,14 +1,17 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
+SETUVAR --export MANPAGER:less\x20\x2dR\x20\x2d\x2duse\x2dcolor\x20\x2dDd\x2bg\x20\x2dDu\x2bb\x20\x2dDE\x2br\x20\x2dDC\x2bm\x20\x2dDS\x2by\x20\x2dDP\x2bc
+SETUVAR --export MANROFFOPT:\x2dP\x20\x2dc
 SETUVAR __fish_initialized:3400
-SETUVAR fish_color_autosuggestion:64DF85
+SETUVAR _fisher_upgraded_to_4_4:\x1d
+SETUVAR fish_color_autosuggestion:875f87
 SETUVAR fish_color_cancel:\x2d\x2dreverse
-SETUVAR fish_color_command:00BF32
-SETUVAR fish_color_comment:5C9900
+SETUVAR fish_color_command:87d7af
+SETUVAR fish_color_comment:005faf
 SETUVAR fish_color_cwd:green
 SETUVAR fish_color_cwd_root:red
-SETUVAR fish_color_end:8EEB00
-SETUVAR fish_color_error:60B9CE
+SETUVAR fish_color_end:b294bb
+SETUVAR fish_color_error:cc6666
 SETUVAR fish_color_escape:00a6b2
 SETUVAR fish_color_history_current:\x2d\x2dbold
 SETUVAR fish_color_host:normal
@@ -18,9 +21,9 @@ SETUVAR fish_color_match:\x2d\x2dbackground\x3dbrblue
 SETUVAR fish_color_normal:normal
 SETUVAR fish_color_operator:00a6b2
 SETUVAR fish_color_option:\x1d
-SETUVAR fish_color_param:04819E
-SETUVAR fish_color_quote:206676
-SETUVAR fish_color_redirection:7CB02C
+SETUVAR fish_color_param:d787af
+SETUVAR fish_color_quote:ff5f87
+SETUVAR fish_color_redirection:8abeb7
 SETUVAR fish_color_search_match:bryellow\x1e\x2d\x2dbackground\x3dbrblack
 SETUVAR fish_color_selection:white\x1e\x2d\x2dbold\x1e\x2d\x2dbackground\x3dbrblack
 SETUVAR fish_color_status:red

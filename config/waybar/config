@@ -1,9 +1,8 @@
 {
     "layer": "top",
     "position": "top",
-    "height": "30",
-    "modules-left": ["sway/workspaces", "sway/mode"],
-    "modules-center" : ["sway/window"],
+    "modules-left": ["sway/workspaces", "sway/window"],
+    "modules-center" : [],
     "modules-right": ["clock", "network", "pulseaudio", "cpu", "memory", "disk", "backlight", "battery", "tray"],
 
     "network": {
@@ -16,13 +15,25 @@
         "on-click": "nm-connection-editor"
     },
 
+    "hyprland/workspaces": {
+        "format": "{name}",
+        "on-click": "activate",
+        "on-scroll-up": "hyprctl dispatch workspace e+1",
+        "on-scroll-down": "hyprctl dispatch workspace e-1"
+    },
+
+    "hyprland/window": {
+        "format": "\uf061 {initialTitle} <span style=\"italic\">{}</span>",
+        "separate-outputs": true
+    },
+
     "sway/mode": {
         "format": "<span style=\"italic\">{}</span>"
     },
 
     "clock": {
         "interval": 1,
-        "format": " {:%H:%M %d %b}",
+        "format": "{:%H:%M %d %b} ",
     },
 
     "sway/workspaces": {

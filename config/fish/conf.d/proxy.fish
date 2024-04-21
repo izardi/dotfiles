@@ -1,6 +1,5 @@
-
 function proxy
-  set -xg ALL_PROXY http://localhost:20172
+  set -gx ALL_PROXY http://127.0.0.1:20173
 end
 
 function noproxy

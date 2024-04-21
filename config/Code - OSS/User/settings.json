@@ -3,9 +3,38 @@
     "extensions.experimental.affinity": {
         "asvetliakov.vscode-neovim": 1
     },
-    "editor.fontFamily": "'Maple Mono SC NF', 'Fira Code', 'monospace'",
-    "editor.fontWeight": "700",
-    "editor.fontSize": 17,
-    "editor.lineHeight": 1.7,
-    "editor.fontLigatures": false
+    "editor.fontFamily": "'JetbrainsMono Nerd Font', 'monospace', 'Fira Code'",
+    "editor.fontWeight": "600",
+    "editor.fontSize": 16,
+    "editor.lineHeight": 1.8,
+    "editor.fontLigatures": false,
+    "cmake.options.statusBarVisibility": "visible",
+    "cmake.options.advanced": {
+        "build": {
+            "statusBarVisibility": "inherit",
+            "inheritDefault": "visible"
+        },
+        "launch": {
+            "statusBarVisibility": "inherit",
+            "inheritDefault": "visible"
+        },
+        "debug": {
+            "statusBarVisibility": "inherit",
+            "inheritDefault": "visible"
+        }
+    },
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false,
+    "[cpp]": {
+        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
+    },
+    "editor.minimap.enabled": false,
+    "window.menuBarVisibility": "toggle",
+    "workbench.colorTheme": "Xcode 11 Default Dark",
+    "editor.formatOnSave": true,
+    "workbench.sideBar.location": "right",
+    "cmake.showOptionsMovedNotification": false,
+    "cmake.showConfigureWithDebuggerNotification": false,
+    "cmake.pinnedCommands": [],
+    "cmake.configureOnOpen": true
 }

@@ -1,3 +1,15 @@
 # If running from tty1 start sway
+
+set -x ELECTRON_OZONE_PLATFORM_HINT wayland
+set -x SDL_VIDEODRIVER wayland
+set -x _JAVA_AWT_WM_NONREPARENTING 1
+set -x XDG_SESSION_TYPE wayland
+set -x CLUTTER_BACKEND wayland
+set -x XDG_CURRENT_DESKTOP sway
+set -x XDG_SESSION_DESKTOP sway
+
+set -x QT_QPA_PLATFORMTHEME qt6ct
+set -x QT_WAYLAND_FORCE_DPI 125
+
 set TTY1 (tty)
 [ "$TTY1" = "/dev/tty1" ] && exec Hyprland

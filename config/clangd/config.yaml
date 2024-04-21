@@ -8,26 +8,10 @@ Hover:
   ShowAKA: Yes
 
 CompileFlags:
-  Add: [-Wall]
+  Add: [-xc++, -Wall, -std=c++23]
+  Compiler: clang++
 
 Diagnostics:
   UnusedIncludes: Strict
   ClangTidy:
-    Add: [clang-*, performance-*, google-*, concurrency-*, bugprone-*]
-
----
-If:
-  PathMatch: [.*\.cpp, .*\.hpp]
-CompileFlags:
-  Add: [-std=c++20]
-  Compiler: clang++
-Diagnostics:
-  ClangTidy:
-    Add: [cppcoreguidelines-*, modernize-*,]
-
----
-If:
-  PathMatch: [.*\.c, .*\.h]
-CompileFlags:
-  Add: [-std=c17]
-  Compiler: clang
+    Add: [clang-*, performance-*, google-*, concurrency-* ]
