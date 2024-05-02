@@ -5,3 +5,5 @@ end
 function noproxy
   set -e ALL_PROXY
 end
+
+abbr -a fet fastfetch
