@@ -16,11 +16,10 @@
 /config/Code - OSS/User/*
 !/config/Code - OSS/User/settings.json
 !/config/code-flags.conf
-!/config/flameshot
 !/config/lazygit
 !/config/gitui
 !/config/mpv
-!/config/ranger
 !/config/sway
 !/config/waybar
 !/config/dunst
+!/config/tym

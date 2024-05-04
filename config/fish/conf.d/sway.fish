@@ -19,8 +19,14 @@ set -x XDG_SESSION_DESKTOP sway
 
 # QT
 set -x QT_QPA_PLATFORMTHEME qt6ct
-set -x QT_WAYLAND_FORCE_DPI 125
+# set -x QT_WAYLAND_FORCE_DPI 125
+
 
 
 set TTY1 (tty)
+
+# sway 
 [ "$TTY1" = "/dev/tty1" ] && exec sway
+
+# Hyprland
+# [ "$TTY1" = "/dev/tty1" ] && exec Hyprland

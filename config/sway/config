@@ -17,7 +17,7 @@ set $up k
 set $right l
 
 # Your preferred terminal emulator
-set $term terminator
+set $term tym
 
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
@@ -27,7 +27,7 @@ set $menu fuzzel -b 000000d8 -t ffffffc0 -f 'Maple Mono SC NF'
 ### Output configuration
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
-set $wallpaper /home/yu/Downloads/vally.jpg
+set $wallpaper /home/yu/Downloads/monet.jpg
 
 output eDP-1 {
     background $wallpaper fill
@@ -227,8 +227,8 @@ default_border none
 set $gnome-schema org.gnome.desktop.interface
 exec_always {
     gsettings set $gnome-schema color-scheme 'prefer-dark'
-    gsettings set $gnome-schema gtk-theme 'Mint-Y-Dark-Purple'
-    gsettings set $gnome-schema icon-theme 'elementary'
+#    gsettings set $gnome-schema icon-theme 'Adwaita'
+    gsettings set $gnome-schema gtk-theme 'Mint-Y-Dark-Teal'
     gsettings set $gnome-schema font-name 'Maple Mono SC NF Bold 12'
 }
 
