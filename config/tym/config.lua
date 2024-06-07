@@ -6,6 +6,6 @@ tym.set("font", "JetBrains Mono NF")
 -- set by table
 tym.set_config({
 	autohide = true,
-	cell_height = 120,
+	cell_height = 110,
 	bold_is_bright = true,
 })

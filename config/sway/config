@@ -17,7 +17,8 @@ set $up k
 set $right l
 
 # Your preferred terminal emulator
-set $term tym
+# set $term tym
+set $term alacritty
 
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
@@ -27,19 +28,20 @@ set $menu fuzzel -b 000000d8 -t ffffffc0 -f 'Maple Mono SC NF'
 ### Output configuration
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
-set $wallpaper /home/yu/Downloads/monet.jpg
+set $wallpaper /home/yu/Pictures/wallpapers/1960.81_full.tif
 
 output eDP-1 {
     background $wallpaper fill
+
     scale 1.25
     resolution 2160x1440 position 0,0
 }
 
 ### Idle configuration
 exec swayidle -w \
-         timeout 300 'swaylock -f -k -l --indicator-idle-visible -i /home/yu/Downloads/Starry_Night_Over_the_Rhone.jpeg' \
+         timeout 300 'swaylock -f -k -l --indicator-idle-visible -i $wallpaper \
          timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-         before-sleep 'swaylock -f -k -l -i /home/yu/Downloads/Starry_Night_Over_the_Rhone.jpeg'
+         before-sleep 'swaylock -f -k -l -i $wallpaper'
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.
@@ -75,7 +77,8 @@ for_window [window_role="dialog"] floating enable
     # Kill focused wimndow
     bindsym $mod+Shift+q kill
 
-    bindsym $mod+shift+s exec slurp
+    bindsym $mod+shift+s exec grim
+    bindsym $mod+shift+a exec grim -g "$(slurp)"
 
     # Start your launcher
     bindsym $mod+d exec $menu

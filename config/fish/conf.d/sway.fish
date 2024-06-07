@@ -16,6 +16,7 @@ set -x _JAVA_AWT_WM_NONREPARENTING 1
 set -x XDG_SESSION_TYPE wayland
 set -x XDG_CURRENT_DESKTOP sway
 set -x XDG_SESSION_DESKTOP sway
+set -x GRIM_DEFAULT_DIR /home/yu/Pictures/Grim
 
 # QT
 set -x QT_QPA_PLATFORMTHEME qt6ct
