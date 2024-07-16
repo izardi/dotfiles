@@ -17,8 +17,8 @@ set $up k
 set $right l
 
 # Your preferred terminal emulator
-# set $term tym
-set $term alacritty
+set $term tym
+# set $term alacritty
 
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
@@ -39,8 +39,8 @@ output eDP-1 {
 
 ### Idle configuration
 exec swayidle -w \
-         timeout 300 'swaylock -f -k -l --indicator-idle-visible -i $wallpaper \
-         timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+         timeout 500 'swaylock -f -k -l --indicator-idle-visible -i $wallpaper' \
+         timeout 700 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
          before-sleep 'swaylock -f -k -l -i $wallpaper'
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
@@ -217,7 +217,7 @@ bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
 bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
 
 # translate clipboard
-bindsym $mod+t exec ~/.config/sway/trans.sh
+bindsym $mod+t exec ~/.config/trans.sh
 
 #gaps
 gaps inner 3

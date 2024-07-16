@@ -1,25 +1,40 @@
 {
     "layer": "top",
     "position": "top",
-    "modules-left": ["sway/workspaces", "sway/window"],
+    "modules-left": ["wlr/taskbar"],
     "modules-center" : [],
     "modules-right": ["clock", "network", "pulseaudio", "cpu", "memory", "disk", "backlight", "battery", "tray"],
 
-    "network": {
-        "format-wifi": "{essid} ({signalStrength}%) ",
-        "tooltip-format-wifi": "{ifname}: {ipaddr}/{cidr}\n{essid} on {frequency}GHz",
-        "format-ethernet": "{ipaddr} ",
-        "tooltip-format": "{ifname}: {ipaddr}/{cidr}",
-        "format-linked": "{ifname} (No IP) ",
-        "format-disconnected": "Disconnected ⚠",
-        "on-click": "nm-connection-editor"
-    },
-
-    "hyprland/workspaces": {
-        "format": "{name}",
+    "hyprland/workspaces": { 
+        "format": "{name}: {icon}",
+	    "format-icons": {
+		    "1": "",
+		    "2": "",
+		    "3": "",
+		    "4": "",
+		    "5": "",
+		    "active": "",
+		    "default": ""
+	    },
         "on-click": "activate",
         "on-scroll-up": "hyprctl dispatch workspace e+1",
         "on-scroll-down": "hyprctl dispatch workspace e-1"
+    },
+
+    "wlr/taskbar": {
+        "format": "{icon}",
+        "icon-size": 14,
+        "icon-theme": "Numix-Circle",
+        "tooltip-format": "{title}",
+        "on-click": "activate",
+        "on-click-middle": "close",
+        "app_ids-mapping": {
+          "firefoxdeveloperedition": "firefox-developer-edition"
+        },
+        "rewrite": {
+            "Firefox Web Browser": "Firefox",
+            "Foot Server": "Terminal"
+        }
     },
 
     "hyprland/window": {
@@ -90,6 +105,16 @@
     "backlight": {
         "format": "{percent}% {icon}",
         "format-icons": ["", "", "", "", "", "", "", "", ""]
+    },
+
+    "network": {
+        "format-wifi": "{essid} ({signalStrength}%) ",
+        "tooltip-format-wifi": "{ifname}: {ipaddr}/{cidr}\n{essid} on {frequency}GHz",
+        "format-ethernet": "{ipaddr} ",
+        "tooltip-format": "{ifname}: {ipaddr}/{cidr}",
+        "format-linked": "{ifname} (No IP) ",
+        "format-disconnected": "Disconnected ⚠",
+        "on-click": "nm-connection-editor"
     },
 
     "battery": {

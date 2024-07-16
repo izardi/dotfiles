@@ -6,8 +6,8 @@ function noproxy
   set -e ALL_PROXY
 end
 
+abbr -a rm rm -i
 abbr -a fet neofetch
 abbr -a gg g++ -std=c++2c
 abbr -a cl clang++ -std=c++2c
-
 abbr -a mvi mpv --config-dir=/home/yu/.config/mpv-image-viewer

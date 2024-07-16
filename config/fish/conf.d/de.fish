@@ -1,6 +1,3 @@
-# If running from tty1 start sway
-#!/bin/bash
-
 # color
 set -xU MANPAGER 'less -R --use-color -Dd+g -Du+b -DE+r -DC+m -DS+y -DP+c'
 set -xU MANROFFOPT '-P -c'
@@ -14,8 +11,10 @@ set -x CLUTTER_BACKEND wayland
 set -x _JAVA_AWT_WM_NONREPARENTING 1
 # XDG
 set -x XDG_SESSION_TYPE wayland
-set -x XDG_CURRENT_DESKTOP sway
-set -x XDG_SESSION_DESKTOP sway
+# set -x XDG_CURRENT_DESKTOP sway
+# set -x XDG_SESSION_DESKTOP sway
+set -x XDG_CURRENT_DESKTOP Hyprland
+set -x XDG_SESSION_DESKTOP Hyprland
 set -x GRIM_DEFAULT_DIR /home/yu/Pictures/Grim
 
 # QT
@@ -25,9 +24,11 @@ set -x QT_QPA_PLATFORMTHEME qt6ct
 
 
 set TTY1 (tty)
-
 # sway 
-[ "$TTY1" = "/dev/tty1" ] && exec sway
+# [ "$TTY1" = "/dev/tty1" ] && exec sway
 
 # Hyprland
 # [ "$TTY1" = "/dev/tty1" ] && exec Hyprland
+
+# Hyprland
+ [ "$TTY1" = "/dev/tty1" ] && exec niri
