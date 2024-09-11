@@ -8,6 +8,6 @@ end
 
 abbr -a rm rm -i
 abbr -a fet neofetch
-abbr -a gg g++ -std=c++2c
-abbr -a cl clang++ -std=c++2c
+abbr -a gg g++ -std=c++26 -Wall -pedantic
+abbr -a cl clang++ -std=c++26 -Wall -pedantic
 abbr -a mvi mpv --config-dir=/home/yu/.config/mpv-image-viewer

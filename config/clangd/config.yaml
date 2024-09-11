@@ -8,7 +8,7 @@ Hover:
   ShowAKA: Yes
 
 CompileFlags:
-  Add: [-std=c++23, -Wall]
+  Add: [-std=c++26, -Wall]
   Compiler: clang++
 
 Diagnostics:
