@@ -14,3 +14,4 @@ family = "Maple Mono SC NF"
 
 [window]
 opacity = 0.8
+blur = true

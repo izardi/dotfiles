@@ -17,8 +17,8 @@ set $up k
 set $right l
 
 # Your preferred terminal emulator
-set $term tym
-# set $term alacritty
+# set $term tym
+set $term alacritty
 
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
@@ -66,7 +66,7 @@ for_window [window_role="dialog"] floating enable
 # Basics:
 #
     # Start a terminal
-    bindsym $mod+Return exec $term
+    bindsym $mod+a exec $term
 
     # file manager
     bindsym $mod+x exec $term -e yazi
@@ -170,7 +170,7 @@ for_window [window_role="dialog"] floating enable
     bindsym $mod+space focus mode_toggle
 
     # Move focus to the parent container
-    bindsym $mod+a focus parent
+    bindsym $mod+p focus parent
 #
 # Scratchpad:
 #

@@ -1,7 +1,9 @@
 -- AstroUI provides the basis for configuring the AstroNvim User Interface
 -- Configuration documentation can be found with `:h astroui`
 -- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
---       as this provides autocomplete and documentation while editing @type LazySpec
+--       as this provides autocomplete and documentation while editing
+
+---@type LazySpec
 return {
   "AstroNvim/astroui",
   ---@type AstroUIOpts
@@ -13,14 +15,26 @@ return {
       init = { -- this table overrides highlights in all themes
         Normal = { bg = "NONE", ctermbg = "NONE" },
         NormalNC = { bg = "NONE", ctermbg = "NONE" },
-        SignColumn = {},
-        StatusLine = {},
+        IncSearch = { bg = "NONE", ctermbg = "NONE" },
+        NormalFloat = { bg = "NONE", ctermbg = "NONE"},
+        FloatTitle = {bg = "NONE", ctermbg = "NONE"},
+        FloatFooter = {bg = "NONE", ctermbg = "NONE"},
+        FloatBorder = {fg = "#806d9e", bg = "NONE", ctermbg = "NONE"},
+        TabLine = {bg = "NONE", ctermbg = "NONE" },
+        TabLineFill = {bg = "NONE", ctermbg = "NONE" },
+        StatusLine = { bg = "NONE", ctermbg = "NONE"},
+        Pmenu = { bg = "NONE", ctermbg = "NONE"},
+
+        TelescopePrompt = {bg = "NONE", ctermbg = "NONE"},
+        TelescopePromptBorder =  {fg = "#806d9e",bg = "NONE", ctermbg = "NONE"},
+        TelescopePromptNormal = {bg = "NONE", ctermbg = "NONE"},
+        TelescopePromptTitle =  {bg = "NONE", ctermbg = "NONE"},
+
         NeoTreeNormal = { bg = "NONE", ctermbg = "NONE" },
-        NeoTreeNormalNC = { bg = "NONE", ctermbg = "NONE" },
+        NeoTreeNormalNC = { bg = "NONE", ctermbg = "NONE" }
       },
-      astrotheme = { -- a table of overrides/changes when applying the astrotheme theme
-        -- Normal = { bg = "#000000" },
-      },
+      astrodark = { -- a table of overrides/changes when applying the astrotheme theme
+      }
     },
     -- Icons can be configured throughout the interface
     icons = {

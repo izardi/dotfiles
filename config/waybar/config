@@ -1,24 +1,25 @@
 {
     "layer": "top",
     "position": "top",
-    "modules-left": ["wlr/taskbar"],
+    "modules-left": ["niri/workspaces"],
     "modules-center" : [],
     "modules-right": ["clock", "network", "pulseaudio", "cpu", "memory", "disk", "backlight", "battery", "tray"],
 
-    "hyprland/workspaces": { 
-        "format": "{name}: {icon}",
+    "niri/workspaces": {
+	    "format": "{icon}",
 	    "format-icons": {
-		    "1": "",
-		    "2": "",
-		    "3": "",
-		    "4": "",
-		    "5": "",
+		    // Named workspaces
+		    // (you need to configure them in niri)
+		    "chat" : "",
+		    "dev" : "󰅨",
+		    "tv" : "󱖏",
+		    "browser": "",
+		    "terminal" : "",
+
+		    // Icons by state
 		    "active": "",
 		    "default": ""
-	    },
-        "on-click": "activate",
-        "on-scroll-up": "hyprctl dispatch workspace e+1",
-        "on-scroll-down": "hyprctl dispatch workspace e-1"
+	    }
     },
 
     "wlr/taskbar": {
@@ -35,11 +36,6 @@
             "Firefox Web Browser": "Firefox",
             "Foot Server": "Terminal"
         }
-    },
-
-    "hyprland/window": {
-        "format": "\uf061 {initialTitle} <span style=\"italic\">{}</span>",
-        "separate-outputs": true
     },
 
     "sway/mode": {

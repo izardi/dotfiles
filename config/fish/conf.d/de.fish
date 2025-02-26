@@ -18,7 +18,7 @@ set -x XDG_CURRENT_DESKTOP Niri
 set -x XDG_SESSION_DESKTOP Niri
 
 # GRIM defautl dir
-set -x GRIM_DEFAULT_DIR /home/yu/Pictures/Grim
+# set -x GRIM_DEFAULT_DIR /home/yu/Pictures/Grim
 
 # QT
 set -x QT_QPA_PLATFORM wayland

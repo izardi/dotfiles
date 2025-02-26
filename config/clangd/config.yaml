@@ -8,10 +8,10 @@ Hover:
   ShowAKA: Yes
 
 CompileFlags:
-  Add: [-std=c++26, -Wall]
+  Add: [-std=c++26, -stdlib=libc++, -Wall, -fexperimental-library]
   Compiler: clang++
 
 Diagnostics:
   UnusedIncludes: Strict
   ClangTidy:
-    Add: [clang-*, performance-*, google-*, concurrency-* ]
+    Add: [clang-*, performance-*, google-*, concurrency-*]
