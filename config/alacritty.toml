@@ -5,12 +5,11 @@ foreground = "0xffffff"
 [font]
 size = 12
 
-offset = {x = 0, y = 6}
+offset = {x = 0, y = 5}
 
 [font.normal]
-family = "Maple Mono SC NF"
-
-# style = "Bold"
+family = "Maple Mono NF CN"
+#style = "Bold"
 
 [window]
 opacity = 0.8
