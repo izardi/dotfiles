@@ -18,3 +18,4 @@ abbr -a mvi mpv --config-dir=/home/yu/.config/mpv-image-viewer
 abbr -a za zathura
 abbr -a cr cargo run
 abbr -a kubectl minikube kubectl --
+abbr -a pg pgcli -h db.zardi.eu.org -p 32026 -U postgres
