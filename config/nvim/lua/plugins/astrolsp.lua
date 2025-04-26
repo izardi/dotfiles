@@ -50,7 +50,7 @@ return {
           basedpyright = {
             analysis = {
               -- typeCheckingMode = "standard",
-              exclude = { "*" },
+              ignore = { "*" },
             },
           },
         },
