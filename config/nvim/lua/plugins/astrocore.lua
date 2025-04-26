@@ -13,7 +13,7 @@ return {
       large_buf = { size = 1024 * 256, lines = 10000 }, -- set global limits for large files for disabling features like treesitter
       autopairs = true, -- enable autopairs at start
       cmp = true, -- enable completion at start
-      diagnostics = { virtual_text = true, virtual_lines = false}, -- diagnostic settings on startup
+      diagnostics = { virtual_text = true, virtual_lines = false }, -- diagnostic settings on startup
       highlighturl = true, -- highlight URLs at start
       notifications = true, -- enable notifications at start
     },
@@ -73,42 +73,47 @@ return {
 
         ["<Leader>tr"] = {
           function()
-            vim.cmd("w")
-            local filename = vim.fn.expand("%:t:r")  -- 获取当前文件名（无扩展名）
-            local filepath = vim.fn.expand("%:p")    -- 获取完整路径
-            local cmd = string.format("clang++ -std=c++26 -stdlib=libc++ -Wall -pedantic -fsanitize=address -g %s -o %s && ./%s", filepath, filename, filename)
+            vim.cmd "w"
+            local filename = vim.fn.expand "%:t:r" -- 获取当前文件名（无扩展名）
+            local filepath = vim.fn.expand "%:p" -- 获取完整路径
+            local cmd = string.format(
+              "clang++ -std=c++26 -stdlib=libc++ -Wall -pedantic -fsanitize=address -g %s -o %s && ./%s",
+              filepath,
+              filename,
+              filename
+            )
             -- require("toggleterm").exec(cmd, 1, 10, "float")  -- 在浮动终端中运行
             local Terminal = require("toggleterm.terminal").Terminal
-            local term = Terminal:new({ cmd = cmd, direction = "float", close_on_exit = false })
-            term:toggle()  -- 打开终端
+            local term = Terminal:new { cmd = cmd, direction = "float", close_on_exit = false }
+            term:toggle() -- 打开终端
           end,
-          desc = "Compile & Run C++"
+          desc = "Compile & Run C++",
         },
 
         ["<Leader>tc"] = {
           function()
-            vim.cmd("w")
-            local cmd = string.format("cmake --build build --parallel && ./build/app")
+            vim.cmd "w"
+            local cmd = string.format "cmake --build build --parallel && ./build/app"
             -- 提示：将 `your_executable_name` 替换为实际生成的可执行文件名
             local Terminal = require("toggleterm.terminal").Terminal
-            local term = Terminal:new({ cmd = cmd, direction = "float", close_on_exit = false })
+            local term = Terminal:new { cmd = cmd, direction = "float", close_on_exit = false }
             term:toggle()
           end,
-          desc = "CMake Build & Run"
+          desc = "CMake Build & Run",
         },
 
         ["<Leader>tp"] = {
           function()
-            vim.cmd("w")  -- 保存当前文件
-            local filepath = vim.fn.expand("%:p")  -- 获取完整路径
+            vim.cmd "w" -- 保存当前文件
+            local filepath = vim.fn.expand "%:p" -- 获取完整路径
             local cmd = string.format("python %s", filepath)
 
             local Terminal = require("toggleterm.terminal").Terminal
-            local term = Terminal:new({ cmd = cmd, direction = "float", close_on_exit = false })
-            term:toggle()  -- 打开终端
+            local term = Terminal:new { cmd = cmd, direction = "float", close_on_exit = false }
+            term:toggle() -- 打开终端
           end,
-          desc = "Run Python File"
-        }
+          desc = "Run Python File",
+        },
 
         -- tables with just a `desc` key will be registered with which-key if it's installed
         -- this is useful for naming menus
