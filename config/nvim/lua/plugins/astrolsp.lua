@@ -38,8 +38,8 @@ return {
     -- enable servers that you already have installed without mason
     servers = {
       "clangd",
-      "basedpyright",
       "ruff",
+      "basedpyright",
     },
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields
@@ -49,8 +49,7 @@ return {
         settings = {
           basedpyright = {
             analysis = {
-              -- typeCheckingMode = "standard",
-              ignore = { "*" },
+              typeCheckingMode = "standard",
             },
           },
         },

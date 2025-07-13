@@ -11,11 +11,12 @@ function noproxy
 end
 
 abbr -a rm rm -i
-abbr -a fet neofetch
+abbr -a fet macchina
 abbr -a gg g++ -std=c++26 -Wall -pedantic -fsanitize=address,undefined -g
 abbr -a cl clang++ -std=c++26 -stdlib=libc++ -Wall -pedantic -fsanitize=address,undefined -g
 abbr -a mvi mpv --config-dir=/home/yu/.config/mpv-image-viewer
 abbr -a za zathura
 abbr -a cr cargo run
-abbr -a kubectl minikube kubectl --
 abbr -a pg pgcli -h db.zardi.eu.org -p 32026 -U postgres
+abbr -a vir virsh --connect qemu:///system
+abbr -a k kubectl

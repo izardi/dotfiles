@@ -231,14 +231,77 @@ set $gnome-schema org.gnome.desktop.interface
 exec_always {
     gsettings set $gnome-schema color-scheme 'prefer-dark'
 #    gsettings set $gnome-schema icon-theme 'Adwaita'
-    gsettings set $gnome-schema gtk-theme 'Mint-Y-Dark-Teal'
+#    gsettings set $gnome-schema gtk-theme 'Mint-Y-Dark-Teal'
     gsettings set $gnome-schema font-name 'Maple Mono SC NF Bold 12'
 }
 
-exec --no-startup-id waybar
+
+# exec --no-startup-id waybar
 exec --no-startup-id fcitx5 -d
 exec --no-startup-id mako
 # exec --no-startup-id blueman-applet
 # exec --no-startup-id nm-applet
+
+
+bar {
+    position top 
+    # 或者 bottom
+
+    # 2. 模式 (mode)
+    # ---
+    # 定义状态栏的显示模式。
+    # - dock：总是可见 (默认)
+    # - hide：当鼠标不在状态栏上时隐藏
+    # - invisible：总是隐藏，但仍占用空间 (很少用)
+    # 默认值：dock
+    # mode hide
+
+    # 3. 字体
+    # ---
+    # 设置状态栏使用的字体。你可以指定字体家族和大小。
+    # 注意：Swaybar 不支持像 Waybar 那样复杂的多字体和图标字体配置。
+    # 默认值：pango:monospace 8
+    # font pango:DejaVu Sans Mono 10
+
+    # 4. 颜色 (colors)
+    # ---
+    # 定义状态栏的颜色方案。所有颜色都使用十六进制代码（例如 #RRGGBB 或 #AARRGGBB）。
+    # Background (背景色)
+    #colors {
+    #    background #000000FF  # 黑色，不透明
+    #    separator #444444FF # 分隔符颜色
+    #    statusline #FFFFFFFF # 状态文本颜色
+    #    focused_background #000000FF # 当焦点在工作区上时的背景色
+    #    focused_separator #444444FF
+    #    focused_statusline #FFFFFFFF
+
+    #    # 工作区按钮颜色
+    #    urgent_workspace #900000FF # 有紧急窗口的工作区
+    #    focused_workspace #4C780EFF # 当前焦点的工作区
+    #    active_workspace #333333FF # 有窗口但不是当前焦点的工作区
+    #    inactive_workspace #333333FF # 没有窗口的工作区
+    #    binding_mode #CC0000FF # 绑定模式指示器
+    #}
+
+    # 5. 状态命令 (status_command)
+    # ---
+    # 这是最重要的部分，它定义了状态栏显示的内容。
+    # 这个命令的输出将作为状态栏的文本内容。最常用的是 i3status 或 i3blocks-ng。
+    # 如果你使用 i3status，它的配置文件通常在 ~/.config/i3status/config 或 /etc/i3status.conf。
+    # 默认值：i3status
+    # status_command i3status -c ~/.config/i3status/config
+
+    # 你也可以使用其他脚本或程序：
+    # status_command while :; do date +%F\ %T; sleep 1; done
+    # status_command ~/.config/sway/scripts/my_bar_script.sh
+
+    # 6. 系统托盘 (tray)
+    # ---
+    # 启用或禁用系统托盘。默认情况下是启用的。
+    # 注意：Swaybar 的托盘功能不如 Waybar 强大，可能无法显示所有应用程序的图标。
+    # tray_output * # 将托盘显示在所有输出上 (默认)
+    # tray_output <output_name> # 指定托盘显示在哪个输出上，例如 "eDP-1"
+    # tray_padding 2 # 托盘图标之间的间距 (以像素为单位)
+}
 
 include /etc/sway/config.d/*
