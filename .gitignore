@@ -4,12 +4,10 @@
 !/config/alacritty.toml
 !/config/clangd
 !/config/dconf
-!/config/electron-flags.conf
 !/config/fcitx*
 !/config/fish
 !/config/gtk-3.0
 !/config/hypr
-!/config/lapce-stable
 !/config/Code - OSS/
 /config/Code - OSS/*
 !/config/Code - OSS/User
@@ -17,9 +15,8 @@
 !/config/Code - OSS/User/settings.json
 !/config/code-flags.conf
 !/config/lazygit
-!/config/gitui
 !/config/mpv
 !/config/sway
 !/config/waybar
 !/config/dunst
-!/config/tym
+!/config/uv
