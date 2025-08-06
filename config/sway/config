@@ -1,0 +1,296 @@
+# swayfx
+blur enable
+blur_xray enable
+corner_radius 9
+default_dim_inactive 0.1
+blur_passes 2
+layer_effects "waybar" blur enable; shadows enable; corner_radius 14
+
+
+# Logo key. Use Mod1 for Alt.
+set $mod Mod4
+
+# Home row direction keys, like vim
+set $left h
+set $down j
+set $up k
+set $right l
+
+# Your preferred terminal emulator
+# set $term tym
+set $term alacritty
+
+# Note: pass the final command to swaymsg so that the resulting window can be opened
+# on the original workspace that the command was run on.
+set $menu fuzzel -b 000000d8 -t ffffffc0 -f 'Maple Mono SC NF'
+
+
+### Output configuration
+# You can get the names of your outputs by running: swaymsg -t get_outputs
+
+set $wallpaper /home/yu/Pictures/wallpapers/1960.81_full.tif
+
+output eDP-1 {
+    background $wallpaper fill
+
+    scale 1.25
+    resolution 2160x1440 position 0,0
+}
+
+### Idle configuration
+exec swayidle -w \
+         timeout 500 'swaylock -f -k -l --indicator-idle-visible -i $wallpaper' \
+         timeout 700 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+         before-sleep 'swaylock -f -k -l -i $wallpaper'
+# This will lock your screen after 300 seconds of inactivity, then turn off
+# your displays after another 300 seconds, and turn your screens back on when
+# resumed. It will also lock your screen before your computer goes to sleep.
+
+### Input configuration
+# You can get the names of your inputs by running: swaymsg -t get_inputs
+# Read `man 5 sway-input` for more information about this section.
+
+input "1267:12496:ELAN962C:00_04F3:30D0_Touchpad" {
+    dwt enabled
+    tap enabled
+    natural_scroll enabled
+    middle_emulation enabled
+}
+
+# float window
+for_window [window_type="dialog"] floating enable
+for_window [window_role="dialog"] floating enable
+
+### Key bindings
+#
+# Basics:
+#
+    # Start a terminal
+    bindsym $mod+a exec $term
+
+    # file manager
+    bindsym $mod+x exec $term -e yazi
+
+    # firefox
+    bindsym $mod+q exec firefox
+
+    # Kill focused wimndow
+    bindsym $mod+Shift+q kill
+
+    bindsym $mod+shift+s exec grim
+    bindsym $mod+shift+a exec grim -g "$(slurp)"
+
+    # Start your launcher
+    bindsym $mod+d exec $menu
+
+    # Drag floating windows by holding down $mod and left mouse button.
+    # Resize them with right mouse button + $mod.
+    # Despite the name, also works for non-floating windows.
+    # Change normal to inverse to use left mouse button for resizing and right
+    # mouse button for dragging.
+    floating_modifier $mod normal
+
+    # Reload the configuration file
+    bindsym $mod+Shift+c reload
+
+    # Exit sway (logs you out of your Wayland session)
+    bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+#
+# Moving around:
+#
+    # Move your focus around
+    bindsym $mod+$left focus left
+    bindsym $mod+$down focus down
+    bindsym $mod+$up focus up
+    bindsym $mod+$right focus right
+    # Or use $mod+[up|down|left|right]
+    bindsym $mod+Left focus left
+    bindsym $mod+Down focus down
+    bindsym $mod+Up focus up
+    bindsym $mod+Right focus right
+
+    # Move the focused window with the same, but add Shift
+    bindsym $mod+Shift+$left move left
+    bindsym $mod+Shift+$down move down
+    bindsym $mod+Shift+$up move up
+    bindsym $mod+Shift+$right move right
+    # Ditto, with arrow keys
+    bindsym $mod+Shift+Left move left
+    bindsym $mod+Shift+Down move down
+    bindsym $mod+Shift+Up move up
+    bindsym $mod+Shift+Right move right
+#
+# Workspaces:
+#
+    # Switch to workspace
+    bindsym $mod+1 workspace number 1
+    bindsym $mod+2 workspace number 2
+    bindsym $mod+3 workspace number 3
+    bindsym $mod+4 workspace number 4
+    bindsym $mod+5 workspace number 5
+    bindsym $mod+6 workspace number 6
+    bindsym $mod+7 workspace number 7
+    bindsym $mod+8 workspace number 8
+    bindsym $mod+9 workspace number 9
+    bindsym $mod+0 workspace number 10
+    # Move focused container to workspace
+    bindsym $mod+Shift+1 move container to workspace number 1
+    bindsym $mod+Shift+2 move container to workspace number 2
+    bindsym $mod+Shift+3 move container to workspace number 3
+    bindsym $mod+Shift+4 move container to workspace number 4
+    bindsym $mod+Shift+5 move container to workspace number 5
+    bindsym $mod+Shift+6 move container to workspace number 6
+    bindsym $mod+Shift+7 move container to workspace number 7
+    bindsym $mod+Shift+8 move container to workspace number 8
+    bindsym $mod+Shift+9 move container to workspace number 9
+    bindsym $mod+Shift+0 move container to workspace number 10
+    # Note: workspaces can have any name you want, not just numbers.
+    # We just use 1-10 as the default.
+#
+# Layout stuff:
+#
+    # You can "split" the current object of your focus with
+    # $mod+b or $mod+v, for horizontal and vertical splits
+    # respectively.
+    bindsym $mod+b splith
+    bindsym $mod+v splitv
+
+    # Switch the current container between different layout styles
+    bindsym $mod+s layout stacking
+    bindsym $mod+w layout tabbed
+    bindsym $mod+e layout toggle split
+
+    # Make the current focus fullscreen
+    bindsym $mod+f fullscreen
+
+    # Toggle the current focus between tiling and floating mode
+    bindsym $mod+Shift+space floating toggle
+
+    # Swap focus between the tiling area and the floating area
+    bindsym $mod+space focus mode_toggle
+
+    # Move focus to the parent container
+    bindsym $mod+p focus parent
+#
+# Scratchpad:
+#
+    # Sway has a "scratchpad", which is a bag of holding for windows.
+    # You can send windows there and get them back later.
+
+    # Move the currently focused window to the scratchpad
+    bindsym $mod+Shift+minus move scratchpad
+
+    # Show the next scratchpad window or hide the focused scratchpad window.
+    # If there are multiple scratchpad windows, this command cycles through them.
+    bindsym $mod+minus scratchpad show
+#
+# Resizing containers:
+#
+mode "resize" {
+    # left will shrink the containers width
+    # right will grow the containers width
+    # up will shrink the containers height
+    # down will grow the containers height
+    bindsym $left resize shrink width 10px
+    bindsym $down resize grow height 10px
+    bindsym $up resize shrink height 10px
+    bindsym $right resize grow width 10px
+
+    # Ditto, with arrow keys
+    bindsym Left resize shrink width 10px
+    bindsym Down resize grow height 10px
+    bindsym Up resize shrink height 10px
+    bindsym Right resize grow width 10px
+
+    # Return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+# quick key
+bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym --locked XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym --locked XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
+bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
+
+# translate clipboard
+bindsym $mod+t exec ~/.config/trans.sh
+
+#gaps
+gaps inner 3
+gaps outer 3
+
+#border
+default_border none
+
+
+# exec --no-startup-id waybar
+exec --no-startup-id fcitx5 -d
+exec --no-startup-id mako
+# exec --no-startup-id blueman-applet
+# exec --no-startup-id nm-applet
+
+
+bar {
+    position top 
+    # 2. 模式 (mode)
+    # ---
+    # 定义状态栏的显示模式。
+    # - dock：总是可见 (默认)
+    # - hide：当鼠标不在状态栏上时隐藏
+    # - invisible：总是隐藏，但仍占用空间 (很少用)
+    # 默认值：dock
+    # mode hide
+
+    # 3. 字体
+    # ---
+    # 设置状态栏使用的字体。你可以指定字体家族和大小。
+    # 注意：Swaybar 不支持像 Waybar 那样复杂的多字体和图标字体配置。
+    # 默认值：pango:monospace 8
+    # font pango:DejaVu Sans Mono 10
+
+    # 4. 颜色 (colors)
+    # ---
+    # 定义状态栏的颜色方案。所有颜色都使用十六进制代码（例如 #RRGGBB 或 #AARRGGBB）。
+    # Background (背景色)
+    #colors {
+    #    background #000000FF  # 黑色，不透明
+    #    separator #444444FF # 分隔符颜色
+    #    statusline #FFFFFFFF # 状态文本颜色
+    #    focused_background #000000FF # 当焦点在工作区上时的背景色
+    #    focused_separator #444444FF
+    #    focused_statusline #FFFFFFFF
+
+    #    # 工作区按钮颜色
+    #    urgent_workspace #900000FF # 有紧急窗口的工作区
+    #    focused_workspace #4C780EFF # 当前焦点的工作区
+    #    active_workspace #333333FF # 有窗口但不是当前焦点的工作区
+    #    inactive_workspace #333333FF # 没有窗口的工作区
+    #    binding_mode #CC0000FF # 绑定模式指示器
+    #}
+
+    # 5. 状态命令 (status_command)
+    # ---
+    # 这是最重要的部分，它定义了状态栏显示的内容。
+    # 这个命令的输出将作为状态栏的文本内容。最常用的是 i3status 或 i3blocks-ng。
+    # 如果你使用 i3status，它的配置文件通常在 ~/.config/i3status/config 或 /etc/i3status.conf。
+    # 默认值：i3status
+    # status_command i3status -c ~/.config/i3status/config
+
+    # 你也可以使用其他脚本或程序：
+    # status_command while :; do date +%F\ %T; sleep 1; done
+    # status_command ~/.config/sway/scripts/my_bar_script.sh
+
+    # 6. 系统托盘 (tray)
+    # ---
+    # 启用或禁用系统托盘。默认情况下是启用的。
+    # 注意：Swaybar 的托盘功能不如 Waybar 强大，可能无法显示所有应用程序的图标。
+    # tray_output * # 将托盘显示在所有输出上 (默认)
+    # tray_output <output_name> # 指定托盘显示在哪个输出上，例如 "eDP-1"
+    # tray_padding 2 # 托盘图标之间的间距 (以像素为单位)
+}
+
+include /etc/sway/config.d/*

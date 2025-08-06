@@ -1,0 +1,17 @@
+[colors.primary]
+background = "0x000000"
+foreground = "0xffffff"
+
+[font]
+size = 12
+
+offset = {x = 0, y = 5}
+
+[font.normal]
+# family = "Maple Mono NF CN"
+family = "Jetbrains Mono NF"
+style = "SemiBold"
+
+[window]
+opacity = 0.77
+blur = true

@@ -1,0 +1,17 @@
+InlayHints:
+  Designators: Yes
+  Enabled: Yes
+  ParameterNames: Yes
+  DeducedTypes: Yes
+
+Hover:
+  ShowAKA: Yes
+
+CompileFlags:
+  Add: [-std=c++26, -stdlib=libc++, -Wall, -fexperimental-library]
+  Compiler: clang++
+
+Diagnostics:
+  UnusedIncludes: Strict
+  ClangTidy:
+    Add: [clang-*, performance-*, google-*, concurrency-*]

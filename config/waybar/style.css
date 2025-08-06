@@ -1,0 +1,122 @@
+@import "mocha.css";
+
+/* --- GENERAL --- */
+* {
+  font-family: JetBrainsMono Nerd Font;
+  font-size: 13px;
+  font-weight: bold;
+  min-height: 19px;
+}
+
+#waybar {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+#window,
+#clock,
+#network,
+#idle_inhibitor,
+#pulseaudio,
+#cpu,
+#memory,
+#disk,
+#temperature,
+#backlight,
+#battery,
+#custom-updates,
+#custom-dunst,
+#tray,
+#custom-lock {
+  padding: 0.3rem 0.75rem;
+}
+
+/* --- LEFT MODULES --- */
+
+#workspaces {
+  padding-left: 0.3rem;
+}
+
+#workspaces button {
+  color: @lavender;
+  border-radius: 2rem;
+  padding: 0.25rem;
+
+  transition: color 0.5s, background-color 0.5s;
+}
+
+#workspaces button.empty {
+  color: @overlay0;
+}
+
+#workspaces button.urgent {
+  color: @rosewater;
+}
+
+#workspaces button.focused {
+  color: @sky;
+  background-color: @surface1;
+}
+
+#workspaces button:hover {
+  color: @sapphire;
+  background-color: @surface2;
+}
+
+#window {
+  color: @text;
+}
+
+/* --- CENTER MODULES --- */
+
+#clock {
+  color: @blue;
+}
+
+/* --- RIGHT MODULES --- */
+
+#network {
+  color: @teal;
+}
+
+#pulseaudio {
+  color: @maroon;
+}
+
+#cpu {
+  color: @mauve;
+}
+
+#memory {
+  color: @peach;
+}
+
+#backlight {
+  color: @yellow;
+}
+
+#battery {
+  color: @green;
+}
+
+#battery.charging {
+  color: @green;
+}
+
+#battery.warning:not(.charging) {
+  color: @red;
+}
+
+#custom-updates {
+  color: @red;
+}
+
+#disk {
+  color: @sapphire;
+}
+
+/*---*/
+
+#tray {
+  margin-right: 0.75rem;
+  border-radius: 1rem;
+}

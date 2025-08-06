@@ -1,0 +1,134 @@
+{
+    "layer": "top",
+    "position": "top",
+    "modules-left": ["niri/workspaces"],
+    "modules-center" : [],
+    "modules-right": ["clock", "network", "pulseaudio", "cpu", "memory", "disk", "backlight", "battery", "tray"],
+
+    "niri/workspaces": {
+	    "format": "{icon}",
+	    "format-icons": {
+		    // Named workspaces
+		    // (you need to configure them in niri)
+		    "chat" : "",
+		    "dev" : "󰅨",
+		    "tv" : "󱖏",
+		    "browser": "",
+		    "terminal" : "",
+
+		    // Icons by state
+		    "active": "",
+		    "default": ""
+	    }
+    },
+
+    "wlr/taskbar": {
+        "format": "{icon}",
+        "icon-size": 14,
+        "icon-theme": "Numix-Circle",
+        "tooltip-format": "{title}",
+        "on-click": "activate",
+        "on-click-middle": "close",
+        "app_ids-mapping": {
+          "firefoxdeveloperedition": "firefox-developer-edition"
+        },
+        "rewrite": {
+            "Firefox Web Browser": "Firefox",
+            "Foot Server": "Terminal"
+        }
+    },
+
+    "sway/mode": {
+        "format": "<span style=\"italic\">{}</span>"
+    },
+
+    "clock": {
+        "interval": 60,
+        "format": "{:%H:%M %d %b} ",
+    },
+
+    "sway/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": true,
+        "format": "{name}: {icon}",
+        "format-icons": {
+            "1": "",
+            "2": "",
+            "3": "",
+            "4": "",
+            "5": "",
+            "urgent": "",
+            "focused": "",
+            "default": "",
+            "high-priority-named": ["1", "2"]
+        }
+    },
+
+    "pulseaudio": { // TODO: replace with wireplumber
+        "format":                 "{volume}% {icon} {format_source}",
+        "format-bluetooth":       "{volume}% {icon} {format_source}",
+        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-muted":           " {format_source}",
+        "format-source":          " {volume}% ",
+        "format-source-muted":    " ",
+        "format-icons": {
+            "headphone":  "",
+            "hands-free": "",
+            "headset":    "",
+            "phone":      "",
+            "portable":   "",
+            "car":        "",
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol"
+    },
+
+    "cpu": {
+        "interval": 10,
+        "format": "{usage}% ",
+    },
+
+    "memory": {
+        "interval": 10,
+        "format": "{}% ",
+    },
+
+    "disk": {
+        "interval": 30,
+        "format": "{percentage_used}% ",
+    },
+
+    "backlight": {
+        "format": "{percent}% {icon}",
+        "format-icons": ["", "", "", "", "", "", "", "", ""]
+    },
+
+    "network": {
+        "format-wifi": "{essid} ({signalStrength}%) ",
+        "tooltip-format-wifi": "{ifname}: {ipaddr}/{cidr}\n{essid} on {frequency}GHz",
+        "format-ethernet": "{ipaddr} ",
+        "tooltip-format": "{ifname}: {ipaddr}/{cidr}",
+        "format-linked": "{ifname} (No IP) ",
+        "format-disconnected": "Disconnected ⚠",
+        "on-click": "nm-connection-editor"
+    },
+
+    "battery": {
+        "interval": 60,
+        "full-at": 95,
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        "format-charging": "{capacity}% 󰂄",
+        "format-plugged": "{capacity}% ",
+        "format-icons": ["󱃍", "󱃍", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰁹"],
+        "tooltip-format": "{capacity}%\n{timeTo}\n{power} W"
+    },
+
+    "tray": {
+        "icon-size": 15,
+        "spacing": 10
+    },
+}
