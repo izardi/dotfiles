@@ -1,6 +1,7 @@
 {
     "layer": "top",
     "position": "top",
+    "autohide": true,
     "modules-left": ["niri/workspaces"],
     "modules-center" : [],
     "modules-right": ["clock", "network", "pulseaudio", "cpu", "memory", "disk", "backlight", "battery", "tray"],

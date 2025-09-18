@@ -1,6 +1,8 @@
 [colors.primary]
-background = "0x000000"
-foreground = "0xffffff"
+#background = "0x000000"
+#foreground = "0xffffff"
+foreground= "0x000000"
+background = "0xffffff"
 
 [font]
 size = 12
@@ -13,5 +15,5 @@ family = "Jetbrains Mono NF"
 style = "SemiBold"
 
 [window]
-opacity = 0.77
+opacity = 0.93
 blur = true

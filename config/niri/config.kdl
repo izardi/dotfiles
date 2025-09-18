@@ -117,14 +117,14 @@ layout {
 prefer-no-csd
 spawn-at-startup "swayidle" "-w" \
     "timeout" "600" \
-    "swaylock -f -k -l --indicator-idle-visible -i /home/yu/Pictures/wallpapers/Sibe.jpg" \
+    "swaylock -f -k -l --indicator-idle-visible -i /home/yu/Pictures/wallpapers/vanf.jpg" \
     "timeout" "660" \
     "niri msg action power-off-monitors"
 spawn-at-startup "waybar"
 spawn-at-startup "mako"
 spawn-at-startup "fcitx5" "-d"
-spawn-at-startup "swaybg" "-i" "/home/yu/Pictures/wallpapers/Claude_Monet_-_Le_Bassin_des_Nympheas_-_Google_Art_Project.jpg"
-spawn-at-startup "nekoray"
+spawn-at-startup "swaybg" "-i" "/home/yu/Pictures/wallpapers/vanf.jpg"
+spawn-at-startup "throne"
 
 // You can change the path where screenshots are saved.
 // A ~ at the front will be expanded to the home directory.
@@ -193,7 +193,7 @@ binds {
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+A { spawn "alacritty"; }
     Mod+D { spawn "fuzzel" "-b" "000000d8" "-t" "ffffffc0" "-f" "Maple Mono NF CN"; }
-    Mod+E { spawn "alacritty" "-e" "yazi";}
+    Mod+E { spawn "alacritty" "-e" "nnn";}
     Mod+T { spawn "~/.config/trans.sh";}
     Ctrl+Alt+L { spawn "swaylock" "-f" "-k" "-l" "-i" "/home/yu/Pictures/wallpapers/1960.81_full.tif"; }
 
