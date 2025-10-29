@@ -1,0 +1,124 @@
+{
+    "layer": "top",
+    "position": "top",
+    "autohide": true,
+    "modules-left": ["niri/workspaces"],
+    "modules-center" : [],
+    "modules-right": ["clock", "idle_inhibitor", "network", "wireplumber#sink","wireplumber#source",  "cpu", "memory", "disk", "backlight", "battery", "tray"],
+
+    "wireplumber#sink": {
+        "format": "{icon} {volume}% ",
+        "format-muted": " ",
+        "format-icons": ["", "", ""] ,
+        "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "scroll-step": 5,
+    },
+
+    "wireplumber#source": {
+        "node-type": "Audio/Source",
+        "format": " {volume}%",
+        "format-muted": " ",
+        "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
+        "scroll-step": 5,
+    },
+
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        }
+    },
+
+    "niri/workspaces": {
+	    "format": "{icon}",
+	    "format-icons": {
+		    // Named workspaces
+		    // (you need to configure them in niri)
+		    "chat" : "",
+		    "tv" : "󱖏",
+		    "browser": "",
+		    "terminal" : "",
+
+		    // Icons by state
+		    "active": "",
+		    "default": ""
+	    }
+    },
+
+    "sway/mode": {
+        "format": "<span style=\"italic\">{}</span>"
+    },
+
+    "clock": {
+        "interval": 60,
+        "format": "{:%H:%M %d %b} ",
+    },
+
+    "sway/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": true,
+        "format": "{name}: {icon}",
+        "format-icons": {
+            "1": "",
+            "2": "",
+            "3": "",
+            "4": "",
+            "5": "",
+            "urgent": "",
+            "focused": "",
+            "default": "",
+            "high-priority-named": ["1", "2"]
+        }
+    },
+
+    "cpu": {
+        "interval": 10,
+        "format": "{usage}% ",
+    },
+
+    "memory": {
+        "interval": 10,
+        "format": "{}% ",
+    },
+
+    "disk": {
+        "interval": 30,
+        "format": "{percentage_used}% ",
+    },
+
+    "backlight": {
+        "format": "{percent}% {icon}",
+        "format-icons": ["", "", "", "", "", "", "", "", ""]
+    },
+
+    "network": {
+        "format": "{ifname}",
+        "format-wifi": "{essid} ({signalStrength}%)  ",
+        "format-ethernet": "{ipaddr}/{cidr} 󰊗 ",
+        "format-disconnected": "󰖪 ", //An empty format will hide the module.
+        "tooltip-format": "{ifname} via {gwaddr} 󰊗 ",
+        "tooltip-format-wifi": "{essid} ({signalStrength}%)  ",
+        "tooltip-format-ethernet": "{ifname}  ",
+        "tooltip-format-disconnected": "󰖪 ",
+    }, 
+
+    "battery": {
+        "interval": 60,
+        "full-at": 95,
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        "format-charging": "{capacity}% 󰂄",
+        "format-plugged": "{capacity}% ",
+        "format-icons": ["󱃍", "󱃍", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰁹"],
+        "tooltip-format": "{capacity}%\n{timeTo}\n{power} W"
+    },
+
+    "tray": {
+        "icon-size": 15,
+        "spacing": 10
+    },
+}

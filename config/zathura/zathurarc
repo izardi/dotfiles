@@ -1,0 +1,5 @@
+# 可鼠标选中后复制到粘贴板
+set selection-clipboard clipboard
+# 护眼颜色
+set recolor-lightcolor "#ECEDB0"
+set recolor-darkcolor black
