@@ -5,6 +5,15 @@
 ---@type LazySpec
 return {
 
+  -- == Examples of Adding Plugins ==
+
+  "andweeb/presence.nvim",
+  {
+    "ray-x/lsp_signature.nvim",
+    event = "BufRead",
+    config = function() require("lsp_signature").setup() end,
+  },
+
   {
     "Kurama622/llm.nvim",
     dependencies = { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim", "echasnovski/mini.diff" },
@@ -196,31 +205,6 @@ You must:
     },
   },
 
-  {
-    "astronvim/astrotheme",
-    opts = {
-      style = {
-        transparent = true, -- Bool value, toggles transparency.
-        inactive = false, -- Bool value, toggles inactive window color.
-        float = false, -- Bool value, toggles floating windows background colors.
-        neotree = false, -- Bool value, toggles neo-trees background color.
-        border = false, -- Bool value, toggles borders.
-        title_invert = false, -- Bool value, swaps text and background colors.
-        italic_comments = false, -- Bool value, toggles italic comments.
-        simple_syntax_colors = false, -- Bool value, simplifies the amounts of colors used for syntax highlighting.
-      },
-    },
-  },
-
-  -- == Examples of Adding Plugins ==
-
-  "andweeb/presence.nvim",
-  {
-    "ray-x/lsp_signature.nvim",
-    event = "BufRead",
-    config = function() require("lsp_signature").setup() end,
-  },
-
   -- == Examples of Overriding Plugins ==
 
   -- customize dashboard options
@@ -254,10 +238,12 @@ You must:
   {
     "L3MON4D3/LuaSnip",
     config = function(plugin, opts)
-      require "astronvim.plugins.configs.luasnip"(plugin, opts) -- include the default astronvim config that calls the setup call
       -- add more custom luasnip configuration such as filetype extend or custom snippets
       local luasnip = require "luasnip"
       luasnip.filetype_extend("javascript", { "javascriptreact" })
+
+      -- include the default astronvim config that calls the setup call
+      require "astronvim.plugins.configs.luasnip"(plugin, opts)
     end,
   },
 
