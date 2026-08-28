@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { width: 320px; font: 13px/1.5 system-ui, sans-serif; margin: 0; padding: 12px 14px; color: #222; }
+    h1 { font-size: 15px; margin: 0 0 10px; }
+    label { display: block; margin: 8px 0 3px; font-weight: 600; }
+    input[type="text"] {
+      box-sizing: border-box; width: 100%; padding: 5px 8px;
+      border: 1px solid #ccc; border-radius: 6px; font-size: 13px;
+    }
+    select { box-sizing: border-box; width: 100%; padding: 5px; border: 1px solid #ccc; border-radius: 6px; }
+    .row { display: flex; align-items: center; gap: 8px; }
+    .row input[type="range"] { flex: 1; }
+    .row output { min-width: 38px; text-align: right; color: #555; }
+    button {
+      cursor: pointer; padding: 6px 14px; border: none; border-radius: 6px;
+      background: #e8e8e8; font-size: 13px;
+    }
+    button.primary { background: #1e64eb; color: #fff; }
+    button:hover { filter: brightness(0.95); }
+    .actions { display: flex; gap: 8px; margin-top: 14px; }
+    #status { margin-top: 10px; color: #666; min-height: 18px; }
+    .hint { color: #999; font-size: 11px; margin-top: 2px; }
+    kbd { background: #f0f0f0; border-radius: 3px; padding: 0 4px; font-size: 11px; }
+<body>
+  <h1>大声朗读 · MultiTTS</h1>
+
+  <label for="baseUrl">API 地址 (MultiTTS HTTP 服务)</label>
+  <input type="text" id="baseUrl" placeholder="http://192.168.10.3:8774">
+  <div class="hint">手机端 MultiTTS 开启网络服务后的地址, 默认端口 8774</div>
+
+  <label for="voice">语音</label>
+  <div class="row">
+    <select id="voice"></select>
+    <button id="refreshVoices" title="重新加载语音列表">⟳</button>
+  </div>
+  <input type="text" id="voiceManual" placeholder="或手动填写 voice ID" style="margin-top:5px">
+
+  <label for="rate">语速 <span class="hint">(MultiTTS speed = 语速 × 50)</span></label>
+  <div class="row">
+    <input type="range" id="rate" min="0.5" max="2" step="0.05">
+    <output id="rateVal"></output>
+  </div>
+
+  <label for="volume">音量 (0–100)</label>
+  <div class="row">
+    <input type="range" id="volume" min="0" max="100" step="1">
+    <output id="volumeVal"></output>
+  </div>
+
+  <label for="pitch">音调 (0–100)</label>
+  <div class="row">
+    <input type="range" id="pitch" min="0" max="100" step="1">
+    <output id="pitchVal"></output>
+  </div>
+
+  <div class="actions">
+    <button id="save" class="primary">保存</button>
+    <button id="test">朗读测试</button>
+  </div>
+  <div id="status"></div>
+
+  <div class="hint">
+    快捷键 <kbd>Alt+R</kbd> 开始/停止 · 右键菜单“大声朗读” ·
+    <kbd>Alt+点击</kbd> 从任意位置开始 · 悬浮条可暂停/跳句/调速
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

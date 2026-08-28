@@ -182,7 +182,7 @@ spawn-at-startup "swayidle" "-w" \
 spawn-at-startup "waybar"
 spawn-at-startup "mako"
 spawn-at-startup "fcitx5" "-d"
-spawn-at-startup "swaybg" "-i" "/home/yu/Pictures/wallpapers/ele.jpg"
+spawn-at-startup "swaybg" "-i" "/home/yu/Pictures/wallpapers/vanf.jpg"
 spawn-at-startup "throne"
 
 // You can change the path where screenshots are saved.

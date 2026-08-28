@@ -17,6 +17,7 @@ set -x CLUTTER_BACKEND wayland
 set -x XDG_SESSION_TYPE wayland
 set -x XDG_CURRENT_DESKTOP Niri
 set -x XDG_SESSION_DESKTOP Niri
+set -x DISPLAY :0
 
 # 强制软件遵守 XDG 规范，减少家目录污染
 # 基础路径定义

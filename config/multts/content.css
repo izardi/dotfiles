@@ -1,0 +1,56 @@
+/* MultiTTS Read Aloud 注入样式 */
+::highlight(mra-highlight) {
+  background-color: rgba(255, 212, 0, 0.45);
+  text-decoration: underline;
+  text-decoration-color: rgba(30, 100, 235, 0.9);
+}
+
+#mra-toolbar {
+  position: fixed;
+  right: 20px;
+  bottom: 24px;
+  z-index: 2147483647;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 8px;
+  border-radius: 22px;
+  background: #fff;
+  color: #222;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.28);
+  font: 14px/1 system-ui, sans-serif;
+}
+#mra-toolbar button {
+  all: unset;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 50%;
+  text-align: center;
+  color: #333;
+}
+#mra-toolbar button:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+#mra-toolbar [data-act="playpause"] {
+  background: #1e64eb;
+  color: #fff;
+  margin: 0 2px;
+}
+#mra-toolbar [data-act="playpause"]:hover {
+  background: #1753c4;
+}
+#mra-progress {
+  padding: 0 8px;
+  font-size: 11px;
+  color: #888;
+  white-space: nowrap;
+}
+#mra-error {
+  padding: 0 8px;
+  font-size: 12px;
+  color: #d33;
+  max-width: 260px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
