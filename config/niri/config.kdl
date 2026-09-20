@@ -74,12 +74,26 @@ window-rule {
     clip-to-geometry true
     background-effect {
         blur true
+        xray false
     }
 }
 
 window-rule {
     match at-startup=true app-id="firefox"
     open-on-workspace "browser"
+}
+
+// Floating Noctalia settings window.
+window-rule {
+  match app-id="dev.noctalia.Noctalia"
+  open-floating true
+  default-column-width { fixed 1080; }
+  default-window-height { fixed 920; }
+}
+
+debug {
+  // Allows notification actions and window activation from Noctalia.
+  honor-xdg-activation-with-invalid-serial
 }
 
 window-rule {
@@ -173,17 +187,22 @@ layout {
 }
 
 // Note that running niri as a session supports xdg-desktop-autostart,
+
 prefer-no-csd
-spawn-at-startup "swayidle" "-w" \
-    "timeout" "600" \
-    "swaylock -f -k -l --indicator-idle-visible -i /home/yu/Pictures/wallpapers/ele.jpg" \
-    "timeout" "660" \
-    "niri msg action power-off-monitors"
-spawn-at-startup "waybar"
-spawn-at-startup "mako"
+spawn-at-startup "noctalia"
 spawn-at-startup "fcitx5" "-d"
-spawn-at-startup "swaybg" "-i" "/home/yu/Pictures/wallpapers/vanf.jpg"
-spawn-at-startup "throne"
+spawn-at-startup "mihomo"
+
+// spawn-at-startup "swayidle" "-w" \
+//    "timeout" "600" \
+//    "swaylock -f -k -l --indicator-idle-visible -i /home/yu/Pictures/wallpapers/ele.jpg" \
+//    "timeout" "660" \
+//    "niri msg action power-off-monitors"
+// spawn-at-startup "waybar"
+// spawn-at-startup "mako"
+// spawn-at-startup "swaybg" "-i" "/home/yu/Pictures/wallpapers/vanf.jpg"
+// spawn-at-startup "nm-applet"
+// spawn-at-startup "blueman-applet"
 
 // You can change the path where screenshots are saved.
 // A ~ at the front will be expanded to the home directory.
@@ -210,10 +229,16 @@ binds {
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+A { spawn "alacritty"; }
-    Mod+D { spawn "fuzzel" "-b" "00000000" "-t" "ffffffff" "-f" "Maple Mono NF CN"; }
+    // Mod+D { spawn "fuzzel" "-b" "00000000" "-t" "ffffffff" "-f" "Maple Mono NF CN"; }
     Mod+E { spawn "alacritty" "-e" "nnn";}
     Mod+T { spawn "~/.config/trans.sh";}
-    Ctrl+Alt+L { spawn "swaylock" "-f" "-k" "-l" "-i" "/home/yu/Pictures/wallpapers/1960.81_full.tif"; }
+    // Ctrl+Alt+L { spawn "swaylock" "-f" "-k" "-l" "-i" "/home/yu/Pictures/wallpapers/1960.81_full.tif"; }
+
+     // Core Noctalia binds
+    Mod+D { spawn-sh "noctalia msg panel-toggle launcher"; }
+    Mod+S { spawn-sh "noctalia msg panel-toggle control-center"; }
+    // Mod+Comma { spawn-sh "noctalia msg settings-toggle"; }
+    // Alt+Tab { spawn-sh "noctalia msg window-switcher"; }
 
     // Example volume keys mappings for PipeWire & WirePlumber.
     // The allow-when-locked=true property makes them work even when the session is locked.
