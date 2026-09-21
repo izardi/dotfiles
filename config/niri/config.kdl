@@ -57,13 +57,17 @@ output "eDP-1" {
     transform "normal"
 }
 
-// Make the wallpaper stationary, rather than moving with workspaces.
+// 1. 让 Noctalia 的壁纸固定在 Backdrop 层，不随工作区移动
 layer-rule {
-    // This is for swaybg; change for other wallpaper tools.
-    // Find the right namespace by running niri msg layers.
-    geometry-corner-radius 8
+    match namespace="^noctalia-wallpaper"
     place-within-backdrop true
+}
+
+// 2. 为 Noctalia 的 UI 组件（Bar、Dock、通知、OSD 等）开启真实的背景模糊
+layer-rule {
+    match namespace="^noctalia-(bar-[^\"]+|notification|dock|panel|attached-panel|osd)$"
     background-effect {
+        xray false
         blur true
     }
 }
@@ -258,9 +262,10 @@ binds {
     // Example brightness key mappings for brightnessctl.
     // You can use regular spawn with multiple arguments too (to avoid going through "sh"),
     // but you need to manually put each argument in separate "" quotes.
-    XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+5%"; }
-    XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "5%-"; }
-    
+    // XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+5%"; }
+    // XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "5%-"; }
+    XF86MonBrightnessUp { spawn-sh "noctalia msg brightness-up"; }
+    XF86MonBrightnessDown { spawn-sh "noctalia msg brightness-down"; }
 
     // Open/close the Overview: a zoomed-out view of workspaces and windows.
     // You can also move the mouse into the top-left hot corner,
